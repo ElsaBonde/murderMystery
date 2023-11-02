@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    background-size: cover;
+}
+
+#text {
+    background-color: white;
+    opacity: 50%;
+    width: 100%;
+    height: 50%;
+    padding: 0.3rem;
+}
