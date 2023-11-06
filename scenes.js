@@ -1,11 +1,10 @@
 let activeSceneIndex = 0;
+inventory = [] //array där saker spelaren plockat upp läggs
 
 const scenes = [
-  { //scen 1 - veranda
-    text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to go inside the house?",
+  { //scen 0 - veranda
+    text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
     item1: {
-      text: "display none",
-      nextSceneIndex: null,
     },
     item2: {
       text: "Go to livingroom",
@@ -13,7 +12,7 @@ const scenes = [
     },
     backgroundImage: 'url("src/porch.jpg")'
   },
-  { //scen två - vardagsrum
+  { //scen 1 - vardagsrum
     text: "It looks like there are two things to add to your inventory! Collect them, they may come in handy later on..",
     item1: {
       text: "Go to porch",
@@ -25,7 +24,7 @@ const scenes = [
     },
     backgroundImage: 'url("src/livingroom.jpg")'
   },
-  { //scen tre - kök
+  { //scen 2 - kök
     background: 'url("kitchen.jpg")',
     text: "Oh my god! There is blood here, maybe this is where the victim was attacked?",
     item1: {
@@ -38,7 +37,7 @@ const scenes = [
     },
     backgroundImage: 'url("src/kitchen.jpg")'
   },
-  { //scen fyra - sovrum
+  { //scen 3 - sovrum
     text: "Call 911! Quick, click the right item in your inventory to call the police.",
     item1: {
       text: "Go to kitchen",
@@ -50,8 +49,8 @@ const scenes = [
     },
     backgroundImage: 'url("src/bedroom.jpg")'
   },
-  { //scen fem - badrum släckt
-    text: "Its so dark here, maybe you should put the lamp on?",
+  { //scen 4 - badrum släckt
+    text: "This was room is creepy, I can't seem to find any way out.. Its so dark in here, maybe you should turn on the light?",
     item1: {
       text: "Go to bedroom",
       nextSceneIndex: 3,
@@ -62,17 +61,25 @@ const scenes = [
     },
     backgroundImage: 'url("src/bathroomDark.jpg")'
   },
-  { //scen fem - badrum tänt
-    text: "AHHHH!! Quickly make a choice about what you want to attack him with.",
+  { //scen 5 - badrum tänt
+    text: "AHHHH!! Make a quick decision about whether you want to run for your life or whether you want to attack the person in front of you.",
     item1: {
       text: "Run for your life",
-      nextSceneIndex: 0,
+      nextSceneIndex: 6,
     },
     item2: {
       text: "Attack",
       nextSceneIndex: 5,
     },
     backgroundImage: 'url("src/bathroom.jpg")'
+  },
+  { //scen 6 - polisstation
+    text: "Thanks for your help, you were very brave! It was a smart move to run, since the killer was still in the house. We're taking over from now. Your clues will help us find and ultimately convict the suspect.",
+    item1: {
+    },
+    item2: {
+    },
+    backgroundImage: 'url("src/policestation.jpg")'
   },
 ];
 

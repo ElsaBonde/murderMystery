@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   color: #191b34;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;;
 }
 body {
   margin: 0;
@@ -14,11 +15,11 @@ body {
     grid-row: 6;
     height: 70%;
     align-self: end;
-} */
+} 
 footer p {
-    font-size: 1.2rem;
-    margin: 0.4rem;
-}
+  font-size: 1.2rem;
+  margin: 0.4rem;
+}*/
 
 .grid {
   display: grid;
@@ -27,27 +28,58 @@ footer p {
 }
 #text {
   background-color: white;
-  opacity: 50%;
-  padding: 0.3rem;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.8rem;
   grid-column: 3/5;
   grid-row: 1;
   align-self: center;
   display: none;
 }
 button {
-  background-color: rgb(190, 190, 201);
   padding: 0.3rem;
-  width: 6.866rem; 
+  width: 6.866rem;
   height: max-content;
 }
 
 #item-1-b {
   grid-area: 3/1;
+  padding: 0;
 }
 
 #item-2-b {
-    grid-area: 3/6;
-    justify-self: end;
+  grid-area: 3/6;
+  justify-self: end;
+  padding: 0;
+}
+
+#item-1,
+#item-2 {
+  margin: 0;
+  padding: 0.7rem;
+}
+
+#item-1-b,
+#item-2-b,
+#item-1,
+#item-2 {
+  border: 0;
+  background-color: #191b34;
+  color: white;
+}
+#item-1-b:hover,
+#item-2-b:hover,
+#item-1:hover,
+#item-2:hover {
+  background-color: white;
+  color: #191b34;
+}
+
+#powerSwitch {
+  display: none;
+  height: 4rem;
+  grid-area: 4/5;
+  justify-self: center;
+  transform: translateX(-1rem); 
 }
 
 /*startpage css*/
@@ -57,7 +89,7 @@ button {
 }
 .textBox {
   background-color: white;
-  opacity: 50%;
+  background: rgba(255, 255, 255, 0.5);
   width: 50%;
   margin: auto;
   border-radius: 0.3rem;
@@ -69,8 +101,28 @@ button {
 .startH1 {
   text-align: center;
   color: rgb(226, 224, 224);
+  font-family: andale mono, monospace;
 }
 
 .startH3 {
   margin-top: 0;
+}
+
+.startGame {
+  opacity: 100%;
+}
+
+#startGameButton {
+  background-color: #191b34;
+  box-shadow: -5px 4px 7px 2px #43445c;
+  color: white;
+  border: none;
+  width: 4rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+#startGameButton:hover {
+  background-color: white;
+  box-shadow: -5px 4px 7px 2px #333333;
+  color: #191b34;
 }
