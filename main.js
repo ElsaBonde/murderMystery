@@ -4,8 +4,6 @@ function main() {
   startGame();
 }
 
-function createItems() {}
-
 function startGame() {
   //hämtar med nedstående klasser (till höger) och ger dessa variabelnamn i js
   const startH1 = document.querySelector(".startH1");
@@ -16,9 +14,14 @@ function startGame() {
   //hämtar hem id för knapparna i scenerna
   const button1 = document.getElementById("item-1-b");
   const button2 = document.getElementById("item-2-b");
+  const addAssetButton = document.getElementById("asset-b");
+  const addAssetButton2 = document.getElementById("asset-b2");
+
   //gör så att knapparna inte syns på startsidan
   button1.style.display = "none";
   button2.style.display = "none";
+  addAssetButton.style.display = "none";
+  addAssetButton2.style.display = "none";
 
   startH1.textContent = start.h1; //hämtar hem alla textelementen i objektet för aktiv scen och visar dessa
   startH3.textContent = start.h3;
@@ -59,6 +62,9 @@ function renderScene() {
 
   const button1 = document.getElementById("item-1-b");
   const button2 = document.getElementById("item-2-b");
+  const addAssetButton = document.getElementById("asset-b");
+  const addAssetButton2 = document.getElementById("asset-b2");
+  const inventoryFooter = document.getElementById("inventory");
 
   setDisplayStyle(button1, button2, text, item1, item2, body, footer);
 
@@ -69,6 +75,22 @@ function renderScene() {
   item2.textContent = scene.item2.text;
   body.style.backgroundImage = scene.backgroundImage; //ändrar style för bodyn backgrundbild utefter aktivt element
 
+  /* villkor som kollar här om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
+  kollar också om vi redan har lagt till den i vår inventory, har vi de så döljs knappen. */
+  if (scene.asset && inventory.indexOf(scene.asset) === -1) {
+    addAssetButton.textContent = scene.asset;
+    addAssetButton.style.display = "block";
+  } else {
+    addAssetButton.style.display = "none";
+  }
+  
+  if (scene.asset2 && inventory.indexOf(scene.asset2) === -1) {
+    addAssetButton2.textContent = scene.asset2;
+    addAssetButton2.style.display = "block";
+  } else {
+    addAssetButton2.style.display = "none";
+  } 
+
   //när man klickar på item1 (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
   item1.onclick = function () {
     goNextScene(scene.item1.nextSceneIndex);
@@ -76,6 +98,29 @@ function renderScene() {
   item2.onclick = function () {
     goNextScene(scene.item2.nextSceneIndex);
   };
+
+    //anonyma funktioner vad som händer när man klickar på först asset sen asset2
+    addAssetButton.onclick = function () {
+      if (inventory.indexOf(scene.asset) !== -1) {
+        //asset finns redan i inventoy. vill inte lägga till igen
+      } else {
+        //asset finns inte så lägg till den med hjälp av .push()
+        inventory.push(scene.asset);
+        //dölj asset knappen eftersom användare plockat upp den.
+        addAssetButton.style.display = "none";
+        //skriv ut uppplockad asset i inventoryn med hjälp av .join()
+        inventoryFooter.textContent = inventory.join(", ");
+      }
+    };
+  
+    addAssetButton2.onclick = function () {
+      if (inventory.indexOf(scene.asset2) !== -1) {
+      } else {
+        inventory.push(scene.asset2);
+        addAssetButton2.style.display = "none";
+        inventoryFooter.textContent = inventory.join(", ");
+      }
+    };
 
   showButton(button1, button2);
 

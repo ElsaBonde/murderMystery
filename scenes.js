@@ -1,19 +1,24 @@
 let activeSceneIndex = 0;
-inventory = [] //array där saker spelaren plockat upp läggs
+const inventory = []; //array där saker spelaren plockat upp läggs
 
 const scenes = [
-  { //scen 0 - veranda
+  {
+    //scen 0 - veranda
     text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
-    item1: {
-    },
+    asset: "Mobil",
+    asset2: "Nyckel",
+    item1: {},
     item2: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
     },
-    backgroundImage: 'url("src/porch.jpg")'
+    backgroundImage: 'url("src/porch.jpg")',
   },
-  { //scen 1 - vardagsrum
+  {
+    //scen 1 - vardagsrum
     text: "It looks like there are two things to add to your inventory! Collect them, they may come in handy later on..",
+    asset: "Patroner",
+    asset2: "Svart pulver",
     item1: {
       text: "Go to porch",
       nextSceneIndex: 0,
@@ -22,11 +27,13 @@ const scenes = [
       text: "Go to kitchen",
       nextSceneIndex: 2,
     },
-    backgroundImage: 'url("src/livingroom.jpg")'
+    backgroundImage: 'url("src/livingroom.jpg")',
   },
-  { //scen 2 - kök
-    background: 'url("kitchen.jpg")',
+  {
+    //scen 2 - kök
     text: "Oh my god! There is blood here, maybe this is where the victim was attacked?",
+    asset: "Kniv med blod",
+    asset2: "Tejp",
     item1: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
@@ -35,10 +42,13 @@ const scenes = [
       text: "Go to bedroom",
       nextSceneIndex: 3,
     },
-    backgroundImage: 'url("src/kitchen.jpg")'
+    backgroundImage: 'url("src/kitchen.jpg")',
   },
-  { //scen 3 - sovrum
+  {
+    //scen 3 - sovrum
     text: "Call 911! Quick, click the right item in your inventory to call the police.",
+    asset: "Pistol",
+    asset2: "Vattenglas",
     item1: {
       text: "Go to kitchen",
       nextSceneIndex: 2,
@@ -47,9 +57,10 @@ const scenes = [
       text: "Go to bathroom",
       nextSceneIndex: 4,
     },
-    backgroundImage: 'url("src/bedroom.jpg")'
+    backgroundImage: 'url("src/bedroom.jpg")',
   },
-  { //scen 4 - badrum släckt
+  {
+    //scen 4 - badrum släckt
     text: "This was room is creepy, I can't seem to find any way out.. Its so dark in here, maybe you should turn on the light?",
     item1: {
       text: "Go to bedroom",
@@ -59,9 +70,10 @@ const scenes = [
       text: "Turn the light on",
       nextSceneIndex: 5,
     },
-    backgroundImage: 'url("src/bathroomDark.jpg")'
+    backgroundImage: 'url("src/bathroomDark.jpg")',
   },
-  { //scen 5 - badrum tänt
+  {
+    //scen 5 - badrum tänt
     text: "AHHHH!! Make a quick decision about whether you want to run for your life or whether you want to attack the person in front of you.",
     item1: {
       text: "Run for your life",
@@ -71,19 +83,16 @@ const scenes = [
       text: "Attack",
       nextSceneIndex: 5,
     },
-    backgroundImage: 'url("src/bathroom.jpg")'
+    backgroundImage: 'url("src/bathroom.jpg")',
   },
-  { //scen 6 - polisstation
+  {
+    //scen 6 - polisstation
     text: "Thanks for your help, you were very brave! It was a smart move to run, since the killer was still in the house. We're taking over from now. Your clues will help us find and ultimately convict the suspect.",
-    item1: {
-    },
-    item2: {
-    },
-    backgroundImage: 'url("src/policestation.jpg")'
+    item1: {},
+    item2: {},
+    backgroundImage: 'url("src/policestation.jpg")',
   },
 ];
-
-
 
 //startpage content
 const start = {
@@ -93,5 +102,5 @@ const start = {
   p1: "1. Search the environment around you and collect objects.",
   p2: "2. Use the items you have previously found when needed in the game, for example to get into new locations or to use to create new items.",
   p3: "3. Have fun while trying to solve the case!",
-  backgroundImage: 'url("src/backgroundimg.jpg")'
-}
+  backgroundImage: 'url("src/backgroundimg.jpg")',
+};
