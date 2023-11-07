@@ -9,17 +9,18 @@ body {
   height: 100vh;
 }
 
-/* footer {
-    background-color: white;
+#footer {
+  background: rgba(255, 255, 255, 0.5);
     grid-column: 1/8;
     grid-row: 6;
     height: 70%;
     align-self: end;
+    display: none;
 } 
 footer p {
   font-size: 1.2rem;
   margin: 0.4rem;
-}*/
+}
 
 .grid {
   display: grid;
@@ -125,4 +126,12 @@ button {
   background-color: white;
   box-shadow: -5px 4px 7px 2px #333333;
   color: #191b34;
+}
+
+.message {
+  background: rgba(206, 206, 206, 0.5);
+  text-align: center;
+  padding-top: 1.2rem;
+  grid-column: 2/6;
+  grid-row: 3;
 }

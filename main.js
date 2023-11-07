@@ -4,6 +4,8 @@ function main() {
   startGame();
 }
 
+function createItems() {}
+
 function startGame() {
   //hämtar med nedstående klasser (till höger) och ger dessa variabelnamn i js
   const startH1 = document.querySelector(".startH1");
@@ -39,7 +41,7 @@ function startGame() {
     //hämtar alla element på startsidan
     const startRoomElements = document.querySelectorAll(".startRoom");
 
-    //loopar igenom och ta bort alla element på startsidan och öppnar sedan upp scen 1
+    //loopar igenom med foreach och ta bort alla element på startsidan och öppnar sedan upp scen 1
     startRoomElements.forEach(function (element) {
       element.remove();
     });
@@ -52,17 +54,13 @@ function renderScene() {
   const text = document.getElementById("text");
   const item1 = document.getElementById("item-1");
   const item2 = document.getElementById("item-2");
+  const footer = document.getElementById("footer");
   const body = document.body;
 
   const button1 = document.getElementById("item-1-b");
   const button2 = document.getElementById("item-2-b");
 
-  button1.style.display = "block";
-  button2.style.display = "block";
-  text.style.display = "block";
-  item1.style.display = "block";
-  item2.style.display = "block";
-  body.style.display = "content";
+  setDisplayStyle(button1, button2, text, item1, item2, body, footer);
 
   const scene = scenes[activeSceneIndex]; //skapar variabel som hämtar hem den aktiva scenen spelaren befinner sig på i arrayen scenes
 
@@ -79,16 +77,68 @@ function renderScene() {
     goNextScene(scene.item2.nextSceneIndex);
   };
 
+  showButton(button1, button2);
+
+  powerButton();
+
+  loseAndWin();
+}
+
+//funktion som körs när man vinner eller förlorar -- FYLL PÅ HÄR ELSA
+function loseAndWin() {
+  const message = document.createElement("h1");
+  if (activeSceneIndex === 6) {
+    message.className = "message";
+    message.textContent = "You either lose or win the game since you ran away.";
+
+    footer.style.display = "none";
+    text.style.display = "none";
+
+    setTimeout(function () {
+      document.body.removeChild(message);
+      text.style.display = "block";
+    }, 7000);
+  }
+
+  document.body.appendChild(message);
+}
+
+//tar hand om när knapparna för att förflytta sig mellan rum ska visas och inte
+function showButton(button1, button2) {
   //visa inte vänster knapp på scen 0, 4 eller 6
-  if (activeSceneIndex === 0 || activeSceneIndex == 4 || activeSceneIndex === 6) {
+  if (
+    activeSceneIndex === 0 ||
+    activeSceneIndex == 4 ||
+    activeSceneIndex === 6
+  ) {
     button1.style.display = "none";
-  } 
-  
+  }
+
   //visa inte höger knapp på scen 4 eller 6
   if (activeSceneIndex === 4 || activeSceneIndex === 6) {
     button2.style.display = "none";
   }
+}
 
+//gör om det aktiva sceneindex till sidan man nu befinner sig, är man ex på scen med indexvärde 1 (vardagsrummet) och trycker på item två (högra knappen) så komemr man iom objektets egenskaper till scenen med indexvärde två (köket)
+function goNextScene(sceneIndex) {
+  activeSceneIndex = sceneIndex; //ändrar activesceneindex till sceneindexet som nu är aktivt
+  renderScene(); //kör funktionen renderscene som hämtar hem allting för den aktiva scenen
+}
+
+//sätter stil för element
+function setDisplayStyle(button1, button2, text, item1, item2, body, footer) {
+  button1.style.display = "block";
+  button2.style.display = "block";
+  text.style.display = "block";
+  item1.style.display = "block";
+  item2.style.display = "block";
+  body.style.display = "content";
+  footer.style.display = "block";
+}
+
+//tar hand om vad som sker när man använder lampknappen i scen 4
+function powerButton() {
   //skapar variabel för lampknappen
   const powerSwitchButton = document.getElementById("powerSwitch");
   if (activeSceneIndex === 4) {
@@ -102,10 +152,4 @@ function renderScene() {
     activeSceneIndex = 5;
     renderScene();
   });
-}
-
-//gör om det aktiva sceneindex till sidan man nu befinner sig, är man ex på scen med indexvärde 1 (vardagsrummet) och trycker på item två (högra knappen) så komemr man iom objektets egenskaper till scenen med indexvärde två (köket)
-function goNextScene(sceneIndex) {
-  activeSceneIndex = sceneIndex; //ändrar activesceneindex till sceneindexet som nu är aktivt
-  renderScene(); //kör funktionen renderscene som hämtar hem allting för den aktiva scenen
 }
