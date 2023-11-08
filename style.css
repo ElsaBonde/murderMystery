@@ -135,6 +135,15 @@ button {
   grid-row: 3;
 }
 
+.message {
+  background: rgba(206, 206, 206, 0.5);
+  text-align: center;
+  padding-top: 1.2rem;
+  margin-bottom: 5rem;
+  grid-column: 2/6;
+  grid-row: 3/5;
+}
+
 #asset-b {
   grid-area: 5/6;
   background: transparent;

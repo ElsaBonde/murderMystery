@@ -91,8 +91,11 @@ function renderScene() {
   item1.onclick = function () {
     goNextScene(scene.item1.nextSceneIndex);
   };
+
   item2.onclick = function () {
     goNextScene(scene.item2.nextSceneIndex);
+    /* keyInInvetory(); */
+    checkInventoryForWinLose(button1, button2);
   };
 
   showButton(button1, button2);
@@ -102,6 +105,64 @@ function renderScene() {
   loseAndWin();
 }
 
+//kollar av inventory i den slutliga scenen där man kan attackera mördaren.
+function checkInventoryForWinLose(button1, button2) {
+  //skapar ny h1tag och ger den klassen message
+  const message = document.createElement("h1");
+  message.className = "message";
+
+  //om man är i scenen med index 5
+  if (activeSceneIndex === 5) {
+    //och det ligger en pistol och kulor i ens inventory
+    if (
+      inventory.includes("src/inventoryitems/gun.png") &&
+      inventory.includes("src/inventoryitems/bullets.png")
+    ) {
+      message.textContent =
+        "Victory!! You managed to attack the killer with your gun and bullets. You have won and neutralized the killer!";
+
+      footer.style.display = "none";
+      text.style.display = "none";
+      button1.style.display = "none";
+      button2.style.display = "none";
+
+      document.body.appendChild(message);
+    } else {
+      message.textContent =
+        "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died.";
+      footer.style.display = "none";
+      text.style.display = "none";
+      button1.style.display = "none";
+      button2.style.display = "none";
+
+      document.body.appendChild(message);
+    }
+  }
+  }
+
+  /* function keyInInvetory() {
+    //ifall scenindex istället är 2
+  if (activeSceneIndex === 2) {
+    //och det INTE finns nycklar i inventory
+  if ( 
+    !inventory.includes("src/inventoryitems/keys.png")
+    ) {
+      message.textContent =
+      "You have to find the key to go into the bedroom.";
+    text.style.display = "none";
+
+    document.body.appendChild(message);
+    setTimeout(function () {
+      document.body.removeChild(message);
+      text.style.display = "block";
+    }, 7000);
+    }
+    else {
+
+    }
+  }
+} */
+
 function collectJoinAndDisplayAssets(
   addAssetButton,
   addAssetButton2,
@@ -109,7 +170,7 @@ function collectJoinAndDisplayAssets(
   asset2Image,
   inventoryFooter,
   scene
-) { 
+) {
   /* villkor som kollar här om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
   kollar också om användare redan har lagt till den i inventory, har den de så döljs knappen.*/
   if (scene.asset && inventory.indexOf(scene.asset) === -1) {
