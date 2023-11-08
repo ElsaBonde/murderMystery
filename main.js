@@ -1,5 +1,8 @@
 window.addEventListener("DOMContentLoaded", main);
 
+let message = document.createElement("h1");
+let startMusic;
+
 function main() {
   startGame();
 }
@@ -41,6 +44,8 @@ function startGame() {
 
   //skapar en anonym funktion som anropar funktionen renderScene
   startGameButton.addEventListener("click", function () {
+    playAudio("src/sounds/startMusic.mp3");
+
     //hämtar alla element på startsidan
     const startRoomElements = document.querySelectorAll(".startRoom");
 
@@ -52,6 +57,25 @@ function startGame() {
     renderScene();
   });
 }
+
+function playAudio(audioSrc) {
+  const audio = new Audio(audioSrc);
+  audio.play();
+  document.body.appendChild(audio);
+}
+
+/* function pauseAudio(audioSrc) {
+  const audioOff = new Audio(audioSrc);
+  audioOff.pause();
+  document.body.appendChild(audioOff);
+} */
+
+function pauseAudio() {
+  if (startMusic) {
+    startMusic.pause();
+  }
+}
+
 
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
@@ -89,13 +113,32 @@ function renderScene() {
 
   //när man klickar på item1 (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
   item1.onclick = function () {
+    pauseAudio();
     goNextScene(scene.item1.nextSceneIndex);
   };
 
   item2.onclick = function () {
-    goNextScene(scene.item2.nextSceneIndex);
-    /* keyInInvetory(); */
-    checkInventoryForWinLose(button1, button2);
+    pauseAudio();
+
+    // om aktivt scenindex är 2 (köket) och användaren INTE har nyckeln i sitt inventory
+    if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
+      message.className = "messageN";
+      message.textContent =
+        "You need the key to go in there.. Hint: look around the porch.";
+      text.style.display = "none";
+
+      setTimeout(function () {
+        document.body.removeChild(message);
+        text.style.display = "block";
+      }, 7000);
+      document.body.appendChild(message);
+    } else {
+      //användaren har rätt objekt, gå till nästa scen
+      goNextScene(scene.item2.nextSceneIndex);
+
+      //kolla om användaren har vunnit eller förlorat efter att ha klickat på knappen
+      checkInventoryForWinLose(button1, button2);
+    }
   };
 
   showButton(button1, button2);
@@ -105,10 +148,10 @@ function renderScene() {
   loseAndWin();
 }
 
+
 //kollar av inventory i den slutliga scenen där man kan attackera mördaren.
 function checkInventoryForWinLose(button1, button2) {
   //skapar ny h1tag och ger den klassen message
-  const message = document.createElement("h1");
   message.className = "message";
 
   //om man är i scenen med index 5
@@ -127,6 +170,7 @@ function checkInventoryForWinLose(button1, button2) {
       button2.style.display = "none";
 
       document.body.appendChild(message);
+      playAudio("src/sounds/gunshot.mp3");
     } else {
       message.textContent =
         "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died.";
@@ -136,32 +180,10 @@ function checkInventoryForWinLose(button1, button2) {
       button2.style.display = "none";
 
       document.body.appendChild(message);
+      playAudio("src/sounds/fail.mp3");
     }
   }
-  }
-
-  /* function keyInInvetory() {
-    //ifall scenindex istället är 2
-  if (activeSceneIndex === 2) {
-    //och det INTE finns nycklar i inventory
-  if ( 
-    !inventory.includes("src/inventoryitems/keys.png")
-    ) {
-      message.textContent =
-      "You have to find the key to go into the bedroom.";
-    text.style.display = "none";
-
-    document.body.appendChild(message);
-    setTimeout(function () {
-      document.body.removeChild(message);
-      text.style.display = "block";
-    }, 7000);
-    }
-    else {
-
-    }
-  }
-} */
+}
 
 function collectJoinAndDisplayAssets(
   addAssetButton,
@@ -224,7 +246,7 @@ function collectJoinAndDisplayAssets(
 function loseAndWin() {
   const message = document.createElement("h1");
   if (activeSceneIndex === 6) {
-    message.className = "message";
+    message.className = "messageN";
     message.textContent = "You either lose or win the game since you ran away.";
 
     footer.style.display = "none";

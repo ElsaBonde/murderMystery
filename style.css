@@ -127,7 +127,7 @@ button {
   color: #191b34;
 }
 
-.message {
+.messageN {
   background: rgba(206, 206, 206, 0.5);
   text-align: center;
   padding-top: 1.2rem;
@@ -163,6 +163,7 @@ button {
 .scene0asset1 {
   grid-area: 2/2;
 }
+
 
 
 .inventoryImg {
