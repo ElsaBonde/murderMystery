@@ -48,6 +48,7 @@ function startGame() {
     startRoomElements.forEach(function (element) {
       element.remove();
     });
+
     renderScene();
   });
 }
@@ -64,6 +65,8 @@ function renderScene() {
   const button2 = document.getElementById("item-2-b");
   const addAssetButton = document.getElementById("asset-b");
   const addAssetButton2 = document.getElementById("asset-b2");
+  const assetImage = document.getElementById("asset-image");
+  const asset2Image = document.getElementById("asset-image2");
   const inventoryFooter = document.getElementById("inventory");
 
   setDisplayStyle(button1, button2, text, item1, item2, body, footer);
@@ -75,21 +78,14 @@ function renderScene() {
   item2.textContent = scene.item2.text;
   body.style.backgroundImage = scene.backgroundImage; //ändrar style för bodyn backgrundbild utefter aktivt element
 
-  /* villkor som kollar här om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
-  kollar också om vi redan har lagt till den i vår inventory, har vi de så döljs knappen. */
-  if (scene.asset && inventory.indexOf(scene.asset) === -1) {
-    addAssetButton.textContent = scene.asset;
-    addAssetButton.style.display = "block";
-  } else {
-    addAssetButton.style.display = "none";
-  }
-  
-  if (scene.asset2 && inventory.indexOf(scene.asset2) === -1) {
-    addAssetButton2.textContent = scene.asset2;
-    addAssetButton2.style.display = "block";
-  } else {
-    addAssetButton2.style.display = "none";
-  } 
+  collectJoinAndDisplayAssets(
+    addAssetButton,
+    addAssetButton2,
+    assetImage,
+    asset2Image,
+    inventoryFooter,
+    scene
+  );
 
   //när man klickar på item1 (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
   item1.onclick = function () {
@@ -99,34 +95,68 @@ function renderScene() {
     goNextScene(scene.item2.nextSceneIndex);
   };
 
-    //anonyma funktioner vad som händer när man klickar på först asset sen asset2
-    addAssetButton.onclick = function () {
-      if (inventory.indexOf(scene.asset) !== -1) {
-        //asset finns redan i inventoy. vill inte lägga till igen
-      } else {
-        //asset finns inte så lägg till den med hjälp av .push()
-        inventory.push(scene.asset);
-        //dölj asset knappen eftersom användare plockat upp den.
-        addAssetButton.style.display = "none";
-        //skriv ut uppplockad asset i inventoryn med hjälp av .join()
-        inventoryFooter.textContent = inventory.join(", ");
-      }
-    };
-  
-    addAssetButton2.onclick = function () {
-      if (inventory.indexOf(scene.asset2) !== -1) {
-      } else {
-        inventory.push(scene.asset2);
-        addAssetButton2.style.display = "none";
-        inventoryFooter.textContent = inventory.join(", ");
-      }
-    };
-
   showButton(button1, button2);
 
   powerButton();
 
   loseAndWin();
+}
+
+function collectJoinAndDisplayAssets(
+  addAssetButton,
+  addAssetButton2,
+  assetImage,
+  asset2Image,
+  inventoryFooter,
+  scene
+) { 
+  /* villkor som kollar här om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
+  kollar också om användare redan har lagt till den i inventory, har den de så döljs knappen.*/
+  if (scene.asset && inventory.indexOf(scene.asset) === -1) {
+    assetImage.src = scene.asset;
+    addAssetButton.style.display = "block";
+  } else {
+    addAssetButton.style.display = "none";
+  }
+
+  if (scene.asset2 && inventory.indexOf(scene.asset2) === -1) {
+    asset2Image.src = scene.asset2;
+    addAssetButton2.style.display = "block";
+  } else {
+    addAssetButton2.style.display = "none";
+  }
+
+  //anonyma funktioner vad som händer när man klickar på först asset sen asset2
+  addAssetButton.onclick = function () {
+    if (inventory.indexOf(scene.asset) !== -1) {
+      //asset finns redan i inventoy. vill inte lägga till igen
+    } else {
+      //asset finns inte så lägg till den med hjälp av .push()
+      inventory.push(scene.asset);
+      //dölj asset knappen eftersom användare plockat upp den.
+      addAssetButton.style.display = "none";
+
+      //skapar element för bilden i scenens asset som läggs i inventory footern
+      const img = document.createElement("img");
+      img.className = "inventoryImg";
+      img.src = scene.asset;
+      img.alt = "Asset Image";
+      inventoryFooter.appendChild(img);
+    }
+  };
+
+  addAssetButton2.onclick = function () {
+    if (inventory.indexOf(scene.asset2) !== -1) {
+    } else {
+      inventory.push(scene.asset2);
+      addAssetButton2.style.display = "none";
+      const img2 = document.createElement("img");
+      img2.className = "inventoryImg";
+      img2.src = scene.asset2;
+      img2.alt = "Asset Image";
+      inventoryFooter.appendChild(img2);
+    }
+  };
 }
 
 //funktion som körs när man vinner eller förlorar -- FYLL PÅ HÄR ELSA

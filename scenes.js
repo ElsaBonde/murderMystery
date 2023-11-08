@@ -5,8 +5,8 @@ const scenes = [
   {
     //scen 0 - veranda
     text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
-    asset: "Mobil",
-    asset2: "Nyckel",
+    asset: "src/inventoryitems/iphone.png",
+    asset2: "src/inventoryitems/keys.png",
     item1: {},
     item2: {
       text: "Go to livingroom",
@@ -17,8 +17,8 @@ const scenes = [
   {
     //scen 1 - vardagsrum
     text: "It looks like there are two things to add to your inventory! Collect them, they may come in handy later on..",
-    asset: "Patroner",
-    asset2: "Svart pulver",
+    asset: "src/inventoryitems/fingerprintPowder.png",
+    asset2: "src/inventoryitems/bullets.png",
     item1: {
       text: "Go to porch",
       nextSceneIndex: 0,
@@ -32,8 +32,8 @@ const scenes = [
   {
     //scen 2 - kök
     text: "Oh my god! There is blood here, maybe this is where the victim was attacked?",
-    asset: "Kniv med blod",
-    asset2: "Tejp",
+    asset: "src/inventoryitems/blodkniv.png",
+    asset2: "src/inventoryitems/tape.png",
     item1: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
@@ -47,8 +47,8 @@ const scenes = [
   {
     //scen 3 - sovrum
     text: "Call 911! Quick, click the right item in your inventory to call the police.",
-    asset: "Pistol",
-    asset2: "Vattenglas",
+    asset: "src/inventoryitems/gun.png",
+    asset2: "src/inventoryitems/water.png",
     item1: {
       text: "Go to kitchen",
       nextSceneIndex: 2,
