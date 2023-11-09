@@ -61,7 +61,7 @@ const scenes = [
   },
   {
     //scen 4 - badrum släckt
-    text: "This was room is creepy, I can't seem to find any way out.. Its so dark in here, maybe you should turn on the light?",
+    text: "This room was so creepy, I can't seem to find any way out.. Its so dark in here, maybe you should turn on the light?",
     item1: {
       text: "Go to bedroom",
       nextSceneIndex: 3,

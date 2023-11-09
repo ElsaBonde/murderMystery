@@ -156,7 +156,7 @@ function checkForPhone() {
 
     setTimeout(function () {
       document.body.removeChild(message);
-    }, 4000);
+    }, 8000);
     document.body.appendChild(message);
   } else if (activeSceneIndex === 3 && inventory.includes(scenes[0].asset)) {
     message.textContent =
@@ -165,7 +165,7 @@ function checkForPhone() {
 
     setTimeout(function () {
       document.body.removeChild(message);
-    }, 4000);
+    }, 8000);
     document.body.appendChild(message);
   }
 }
@@ -270,6 +270,7 @@ function collectJoinAndDisplayAssets(
 function loseAndWin() {
   const message = document.createElement("h1");
   if (activeSceneIndex === 6) {
+    playAudio("src/sounds/cops.mp3");
     message.className = "messageN";
     message.textContent = "You either lose or win the game since you ran away.";
 
