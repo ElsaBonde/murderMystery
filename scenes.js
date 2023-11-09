@@ -103,5 +103,4 @@ const start = {
   p2: "2. Use the items you have previously found when needed in the game, for example to get into new locations or to use to create new items.",
   p3: "3. Have fun while trying to solve the case!",
   backgroundImage: 'url("src/backgroundimg.jpg")',
-  music: 'url("src/sounds/startMusic.mp3")',
 };

@@ -1,7 +1,8 @@
 window.addEventListener("DOMContentLoaded", main);
 
+//globala variabler för h1 och för ett audio element
 let message = document.createElement("h1");
-let startMusic;
+let audio;
 
 function main() {
   startGame();
@@ -35,47 +36,42 @@ function startGame() {
     startP[i].textContent = start["p" + (i + 1)];
   }
 
-  //hämtar hem bodyn och ger den namnet startPage för att sedan byta bakgrundbilden till den som finns i objektet start
-  const startPage = document.querySelector("body");
-  startPage.style.backgroundImage = start.backgroundImage;
+  //hämtar hem bodyn och ger den namnet body för att sedan byta bakgrundbilden till den som finns i objektet start
+  const body = document.querySelector("body");
+  body.style.backgroundImage = start.backgroundImage;
 
   //skapar variabelnamn till startGameButton
   const startGameButton = document.getElementById("startGameButton");
 
   //skapar en anonym funktion som anropar funktionen renderScene
   startGameButton.addEventListener("click", function () {
+    //spelar musik på första scenen
     playAudio("src/sounds/startMusic.mp3");
 
     //hämtar alla element på startsidan
     const startRoomElements = document.querySelectorAll(".startRoom");
 
-    //loopar igenom med foreach och ta bort alla element på startsidan och öppnar sedan upp scen 1
+    //loopar igenom med alla element på startsidan medforeach och ta bort alla element
     startRoomElements.forEach(function (element) {
       element.remove();
     });
-
+    //öppnar upp scen 1
     renderScene();
   });
 }
 
+//funktion som spelar och pausar ljud
 function playAudio(audioSrc) {
-  const audio = new Audio(audioSrc);
+  //befintligt ljud pausas om något redan spelas
+  if (audio) {
+    audio.pause();
+    document.body.removeChild(audio);
+  }
+  //spelar upp ljudet från filen som valt i playAudio och skickar detta till domen
+  audio = new Audio(audioSrc);
   audio.play();
   document.body.appendChild(audio);
 }
-
-/* function pauseAudio(audioSrc) {
-  const audioOff = new Audio(audioSrc);
-  audioOff.pause();
-  document.body.appendChild(audioOff);
-} */
-
-function pauseAudio() {
-  if (startMusic) {
-    startMusic.pause();
-  }
-}
-
 
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
@@ -113,44 +109,69 @@ function renderScene() {
 
   //när man klickar på item1 (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
   item1.onclick = function () {
-    pauseAudio();
+    //pausar musiken
+    playAudio("");
     goNextScene(scene.item1.nextSceneIndex);
   };
 
   item2.onclick = function () {
-    pauseAudio();
-
+    playAudio("");
     // om aktivt scenindex är 2 (köket) och användaren INTE har nyckeln i sitt inventory
-    if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
-      message.className = "messageN";
-      message.textContent =
-        "You need the key to go in there.. Hint: look around the porch.";
-      text.style.display = "none";
-
-      setTimeout(function () {
-        document.body.removeChild(message);
-        text.style.display = "block";
-      }, 7000);
-      document.body.appendChild(message);
-    } else {
-      //användaren har rätt objekt, gå till nästa scen
-      goNextScene(scene.item2.nextSceneIndex);
-
-      //kolla om användaren har vunnit eller förlorat efter att ha klickat på knappen
-      checkInventoryForWinLose(button1, button2);
-    }
+    getIntoBedroom(scene);
+    checkInventoryForWinLose(body, button1, button2);
+    checkForPhone();
   };
 
   showButton(button1, button2);
-
   powerButton();
-
   loseAndWin();
 }
 
+//kollar ifall användaren har nyckeln i sitt inventory, annars säger den åt hen att hämta den i scen 0.
+function getIntoBedroom(scene) {
+  if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
+    message.className = "messageN";
+    message.textContent =
+      "You need the key to go in there.. Hint: look around the porch.";
+    text.style.display = "none";
 
-//kollar av inventory i den slutliga scenen där man kan attackera mördaren.
-function checkInventoryForWinLose(button1, button2) {
+    setTimeout(function () {
+      document.body.removeChild(message);
+      text.style.display = "block";
+    }, 4000);
+    document.body.appendChild(message);
+  } else {
+    //användaren har rätt objekt, gå till nästa scen
+    goNextScene(scene.item2.nextSceneIndex);
+  }
+}
+
+//kollar om användaren har telefonen i sitt inventory när den befinenr sig i sovrummet och har olika beteende beroende på det.
+function checkForPhone() {
+  if (activeSceneIndex === 3 && !inventory.includes(scenes[0].asset)) {
+    message.className = "message";
+    message.textContent =
+      "You should really try to find the phone to be able to call the police.. Hint: Go to the porch.";
+    text.style.display = "none";
+
+    setTimeout(function () {
+      document.body.removeChild(message);
+    }, 4000);
+    document.body.appendChild(message);
+  } else if (activeSceneIndex === 3 && inventory.includes(scenes[0].asset)) {
+    message.textContent =
+      "Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!";
+    text.style.display = "none";
+
+    setTimeout(function () {
+      document.body.removeChild(message);
+    }, 4000);
+    document.body.appendChild(message);
+  }
+}
+
+//kollar av inventory i den slutliga scenen om man väljer att attackera mördare.
+function checkInventoryForWinLose(body, button1, button2) {
   //skapar ny h1tag och ger den klassen message
   message.className = "message";
 
@@ -173,11 +194,12 @@ function checkInventoryForWinLose(button1, button2) {
       playAudio("src/sounds/gunshot.mp3");
     } else {
       message.textContent =
-        "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died.";
+        "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died, but at least you went to heaven.";
       footer.style.display = "none";
       text.style.display = "none";
       button1.style.display = "none";
       button2.style.display = "none";
+      document.body.style.backgroundImage = 'url("src/losegame.png")';
 
       document.body.appendChild(message);
       playAudio("src/sounds/fail.mp3");
@@ -216,6 +238,7 @@ function collectJoinAndDisplayAssets(
     } else {
       //asset finns inte så lägg till den med hjälp av .push()
       inventory.push(scene.asset);
+      playAudio("src/sounds/pickup.mp3");
       //dölj asset knappen eftersom användare plockat upp den.
       addAssetButton.style.display = "none";
 
@@ -232,6 +255,7 @@ function collectJoinAndDisplayAssets(
     if (inventory.indexOf(scene.asset2) !== -1) {
     } else {
       inventory.push(scene.asset2);
+      playAudio("src/sounds/pickup.mp3");
       addAssetButton2.style.display = "none";
       const img2 = document.createElement("img");
       img2.className = "inventoryImg";
@@ -255,7 +279,7 @@ function loseAndWin() {
     setTimeout(function () {
       document.body.removeChild(message);
       text.style.display = "block";
-    }, 7000);
+    }, 4000);
   }
 
   document.body.appendChild(message);
