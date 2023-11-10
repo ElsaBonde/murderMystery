@@ -54,15 +54,15 @@ All scenes in the game are in an array made in Javascript that retrieves content
 - Two objects that are the buttons the player uses to navigate between rooms. In these objects there is a text and "nextSceneIndex"
 - A background image
 
----
+
 
 ### 2.2 Global variables
 There are few global variables in the code, because I wanted to avoid them. Those that exist and what their main task is, is shown below:
 
-- let activeSceneIndex = 0;\
+- **let activeSceneIndex = 0;**\
 _This variable keeps track of which scene the player is on and thus needs to be changeable (let). The variable is used extensively in the code, for example in if else statements when different things must happen depending on where the player is._
 
-- const inventory = [];\
+- **const inventory = [];**\
 _This is where the various things found in the rooms are placed once the player has picked them up. The variable therefore needs to be an array that takes care of several different things._
 _It is also used a lot to check if certain things are in the player's inventory by using if else conditions to generate a certain behavior._
 
@@ -78,7 +78,7 @@ _Called several times in different functions to generate a message to the player
 - **let audio;**\
 _Used to give different sounds to scenes and elements._
 
----
+
 
 ### 2.3 The functions
 Let's talk briefly about the functions, which are the funniest part of the whole game and what helps it become interactive. Below is a little about each function:
