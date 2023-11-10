@@ -1,5 +1,5 @@
 # Murder mystery 
-_A simple text-based game mainly made in Javascript._
+_A simple game mainly made in mainly vanilla Javascript._
  
 ## 1. Project description
 In this game, the player must find various objects and navigate between several rooms to solve a murder mystery. There are three different endings depending on what the player has picked up during the game. The different rooms in the game can also change behavior depending on what the player has in his/hers inventory.
