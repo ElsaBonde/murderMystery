@@ -1,4 +1,4 @@
-let activeSceneIndex = 0; //deklarerar att activeSceneIndex är 0 tills detta förändras genom knapptryckningar från spelare
+let activeSceneIndex = 0; //deklarerar att activeSceneIndex är 0 tills detta förändras genom knapptryckningar från spelaren
 const inventory = []; //array där saker spelaren plockat upp läggs
 
 const scenes = [
@@ -48,7 +48,7 @@ const scenes = [
     //scen 3 - sovrum
     text: "Call 911! Quick, click the right item in your inventory to call the police. If you don't have it you should look for it on the porch",
     asset: "src/inventoryitems/gun.png",
-    asset2: "src/inventoryitems/water.png",
+    asset2: "",
     item1: {
       text: "Go to kitchen",
       nextSceneIndex: 2,

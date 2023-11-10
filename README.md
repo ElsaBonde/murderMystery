@@ -2,9 +2,39 @@
 _A simple text-based game mainly made in Javascript._
  
 ## 1. Project description
-
 In this game, the player must find various objects and navigate between several rooms to solve a murder mystery. There are three different endings depending on what the player has picked up during the game. The different rooms in the game can also change behavior depending on what the player has in his/hers inventory.
 
+### 1.1 Possible endings for the game
+
+#### 1.1.1 Win the game
+If the player has picked up the key (needed to advance in the game from scene 3 to scene 4), the gun and the bullets and then chooses to attack the killer, he/she wins the game by shooting and incapacitating the killer.
+
+#### 1.1.2 Lose the game
+If the player has not picked up both the gun and the bullets and chooses to attack the killer, he/she dies and goes to heaven.
+
+#### 1.1.3 Neither win nor lose the game
+If the player chooses to run for his/hers life instead of attacking the killer, he/she comes to the police station because he is a coward and therefore does not win, but also does not lose because he/she is still alive.
+
+### 1.2 Scenes in the game
+- Start page
+- The porch
+- The living room
+- The kitchen
+- The bedroom
+- Dark bathroom
+- Lit bathroom
+- Police station
+
+### 1.3 Items to pick up in game
+- Phone
+- Keys
+- Fingerprint powder
+- Bullets
+- Tape
+- Knife
+- Gun
+
+---
 
 ## 2. Basic code structure
 
@@ -36,16 +66,16 @@ _This variable keeps track of which scene the player is on and thus needs to be 
 _This is where the various things found in the rooms are placed once the player has picked them up. The variable therefore needs to be an array that takes care of several different things._
 _It is also used a lot to check if certain things are in the player's inventory by using if else conditions to generate a certain behavior._
 
-- const scenes = [{},{}];\
+- **const scenes = [{},{}];**\
 _Needs to be global as the different scenes in the array are called and checked many times. Contains a lot of content necessary for the game such as items to pick up and texts for each room._
 
-- const start = {};\
+- **const start = {};**\
 _Doesn't necessarily need to be global but still is because I wanted all scenes to be bundled in scenes.js_
 
-- let message = document.createElement("h1");\
+- **let message = document.createElement("h1");**\
 _Called several times in different functions to generate a message to the player based on which room it is in and what it has in its inventory._
 
-- let audio;\
+- **let audio;**\
 _Used to give different sounds to scenes and elements._
 
 ---
@@ -53,52 +83,51 @@ _Used to give different sounds to scenes and elements._
 ### 2.3 The functions
 Let's talk briefly about the functions, which are the funniest part of the whole game and what helps it become interactive. Below is a little about each function:
 
-- main()\
+- **main()**\
 _The first function to run calls the startGame function._
 
-- startGame()\
+- **startGame()**\
 _First declares all existing dom elements from index.html and hides the elements that should only be displayed when the scenes array runs._
 _Also creates a click event for the start button which removes all elements on the start page and calls the function to show the first scene in "scenes"._
 
-- renderScene()\
+- **renderScene()**\
 _Gets elements for the scenes and declares them in Javascript. Creates click events for the button on the right and left and calls many functions required for the game to function properly._
 
-- playAudio(audioSrc)\
+- **playAudio(audioSrc)**\
 _Creates the variable that retrieves different sounds and displays it in the DOM. Checks through an if statement if a sound is already playing when a new sound arrives. If so, the first sound is paused and removed from the DOM._
 
-- getIntoBedroom(scene)\
+- **getIntoBedroom(scene)**\
 _Checks if the user is in the kitchen and does not have the key in his/hers inventory. If this is true, a message is displayed to the user that he/she needs the key to proceed. If the user has the key and is in the kitchen, he/she can continue without a message._
 
-- checkForPhone()\
+- **checkForPhone()**\
 _Through an else if statement, finds out whether the user is in the bedroom and has the phone in his inventory or not. If the user has the phone, a message is displayed that the police are being called, if not, the message instead reads that the player should pick up the phone that is on the porch._
 
-- checkInventoryForWinLose(button1, button2)\
+- **checkInventoryForWinLose(button1, button2)**\
 _Finds out if the user is in the lit bathroom (end scene). If the user is, the function checks if there is a gun and bullets in the inventory. If there is, a gunshot sound is played and a message that the player has won by shooting the killer is displayed. If not, a message is displayed instead stating that the user has lost and died and gone to heaven while playing a failure sound._
 
-- collectJoinAndDisplayAssets(addAssetButton, addAssetButton2, assetImage, asset2Image, inventoryFooter, scene)\
+- **collectJoinAndDisplayAssets(addAssetButton, addAssetButton2, assetImage, asset2Image, inventoryFooter, scene)**\
 _In this function there is a condition that checks if asset and asset2 exist on the object in the scene, if it does it is rendered, if not it is hidden._\
 _Also checks if users have already added it to inventory, if they have then the item is hidden._\
 _Also gives asset and asset2 click event which causes them to be added to inventory and emit sound when the player picks them up._
 
-- loseAndWin()\
+- **loseAndWin()**\
 _Checks if the user is on stage 6, which means it ran away from the killer. If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed._
 
-- showButton(button1, button2)\
+- **showButton(button1, button2)**\
 _Determines when the right and left buttons should not be displayed_
 
-- goNextScene(sceneIndex)\
+- **goNextScene(sceneIndex)**\
 _Changes the activeSceneIndex to the scene currently active in the game, then runs the function that fetches all elements for the active scene._
 
-- setDisplayStyle(button1, button2, text, item1, item2, body, footer)\
+- **setDisplayStyle(button1, button2, text, item1, item2, body, footer)**\
 _Determines that all elements in scenes should be displayed_
 
-- powerButton()\
+- **powerButton()**\
 _Make the power button for lamp only appear in the dark bathroom and give it a click event that leads to the light bathroom_
 
  
-**Bold text**
 
-> "aasdasd asdas da sdhgas d
+<!-- > "aasdasd asdas da sdhgas d
 > asdasdasd"
  
 `git status`
@@ -109,5 +138,5 @@ _Make the power button for lamp only appear in the dark bathroom and give it a c
 </body>
 ```
  
-[Min html fil](./index.html)
+[Min html fil](./index.html) -->
  
