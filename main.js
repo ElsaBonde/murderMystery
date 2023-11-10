@@ -266,7 +266,7 @@ function collectJoinAndDisplayAssets(
   };
 }
 
-//funktion som körs när man vinner eller förlorar -- FYLL PÅ HÄR ELSA
+//funktion som körs när man väljer att springa iväg i sista scenen
 function loseAndWin() {
   const message = document.createElement("h1");
   if (activeSceneIndex === 6) {
