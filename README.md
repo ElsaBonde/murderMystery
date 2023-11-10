@@ -9,7 +9,9 @@ In this game, the player must find various objects and navigate between several 
 ## Basic code structure
 
 ### Diffrents scenes
- 
+ The game has a start page and after the player chooses to start the game, it instead jumps into an array of different scenes. The headings below explain how this happens.
+
+#### Start page
  The game's start page has been made in html but received its content from Javascript, as follows:
 
 Html:
@@ -39,6 +41,50 @@ const start = {
   p3: "3. Have fun while trying to solve the case!",
   backgroundImage: 'url("src/backgroundimg.jpg")',
 };
+```
+This could just as well have been done in html only but since one of the big parts during the work on the game was using Javscript I chose to do it this way.
+
+#### Array with all the other pages in the game
+All scenes in the game are in an array made in Javascript that retrieves content to index.html. Each scene includes the following items:
+- A text
+- Two different things to put in the inventory if the player click on them
+- Two objects that are the buttons the player uses to navigate between rooms. In these objects there is a text and "nextSceneIndex"
+- A background image
+
+This is what the html code looks like for the scenes:
+```
+<p id="text"><!-- hämtas via js --></p>
+    <img id="powerSwitch" src="src/powerswitch.png" alt="powerswitch" />
+    <button id="item-1-b">
+      <p id="item-1"><!-- hämtas via js --></p>
+    </button>
+    <button id="item-2-b">
+      <p id="item-2"><!-- hämtas via js --></p>
+    </button>
+
+    <button id="asset-b">
+      <img src="" id="asset-image" alt="Asset Image">
+    </button>
+    <button id="asset-b2">
+      <img src="" id="asset-image2" alt="Asset Image 2">
+    </button>
+```
+
+And the Javascript for the first scene and the the declaration of the array:
+```
+const scenes = [
+  {
+    //scen 0 - veranda
+    text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
+    asset: "src/inventoryitems/iphone.png",
+    asset2: "src/inventoryitems/keys.png",
+    item1: {},
+    item2: {
+      text: "Go to livingroom",
+      nextSceneIndex: 1,
+    },
+    backgroundImage: 'url("src/porch.jpg")',
+  },
 ```
 
 

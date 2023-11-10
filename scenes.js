@@ -1,4 +1,4 @@
-let activeSceneIndex = 0;
+let activeSceneIndex = 0; //deklarerar att activeSceneIndex är 0 tills detta förändras genom knapptryckningar från spelare
 const inventory = []; //array där saker spelaren plockat upp läggs
 
 const scenes = [
