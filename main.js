@@ -118,7 +118,7 @@ function renderScene() {
     playAudio("");
     // om aktivt scenindex är 2 (köket) och användaren INTE har nyckeln i sitt inventory
     getIntoBedroom(scene);
-    checkInventoryForWinLose(body, button1, button2);
+    checkInventoryForWinLose(button1, button2);
     checkForPhone();
   };
 
@@ -171,7 +171,7 @@ function checkForPhone() {
 }
 
 //kollar av inventory i den slutliga scenen om man väljer att attackera mördare.
-function checkInventoryForWinLose(body, button1, button2) {
+function checkInventoryForWinLose(button1, button2) {
   //skapar ny h1tag och ger den klassen message
   message.className = "message";
 
