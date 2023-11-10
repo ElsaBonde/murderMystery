@@ -215,7 +215,7 @@ function collectJoinAndDisplayAssets(
   inventoryFooter,
   scene
 ) {
-  /* villkor som kollar här om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
+  /* villkor som kollar om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
   kollar också om användare redan har lagt till den i inventory, har den de så döljs knappen.*/
   if (scene.asset && inventory.indexOf(scene.asset) === -1) {
     assetImage.src = scene.asset;
