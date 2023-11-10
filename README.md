@@ -8,7 +8,7 @@ In this game, the player must find various objects and navigate between several 
 
 ## Basic code structure
 
-# Diffrents scenes
+### Diffrents scenes
  
  The game's start page has been made in html but received its content from Javascript, as follows:
 
