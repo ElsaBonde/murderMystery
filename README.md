@@ -127,26 +127,20 @@ _Make the power button for lamp only appear in the dark bathroom and give it a c
 This game was made as a school project and is the first project I ever created using Javascript as the main language.\
 I wanted to learn about arrays, loops and if else conditions, which led to a large part of the code for the program being made with these very parts.
 
-### 3.1 Tools used to create the game
+### 3.1 What is needed to run the program
+To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery-2/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
+
+### 3.2 Tools used to create the game
 To create the program I have used Html5, Css3 and JavaScript. The wallpapers are AI generated using [Gencraft.com](https://gencraft.com/generate) and I then added creepy details using the program [InkScape version 1.3](https://inkscape.org/release/inkscape-1.3/windows/64-bit/msi/?redirected=1). The various sound effects in the program were downloaded from [Fesliyanstudios.com](https://www.fesliyanstudios.com/) and [Pixabay.com](https://pixabay.com/sound-effects/search/door/). A big thanks to these sources and free image and editing software.
 
-### 3.2 What I learned working on this project
-While working on the game, I have learned to search for answers and how to ask a question as clearly as possible. This is when you get the best help and thus learn to solve problems on your own.\
+### 3.3 What I learned working on this project
+While working on the game, I have learned to search for answers and how to ask a question as clearly as possible. This is when you get the best help and thus learn to solve problems on your own.
 
-I've also learned that patience is probably the best quality you can have when learning a new programming language.\
+I have also learned that patience is probably the best quality you can have when learning a new programming language.
 
 I have come to the realization that having a community of like-minded people to bounce problems with is very helpful and should not be taken for granted when you are a beginner at something, both by teaching and learning.
 
-<!-- > "aasdasd asdas da sdhgas d
-> asdasdasd"
- 
-`git status`
- 
-```
-<body>
-  hello world
-</body>
-```
- 
-[Min html fil](./index.html) -->
- 
+### 3.4 Maintenance and how to contact me
+This program will be updated the more Javascript I learn and when it is, this file will also be maintained.
+
+If you have any questions or find a bug in the program that you want to share, or if you want to help me build on the game, don't hesitate to contact me at (e.g.: elsasofiabonde@gmail.com).
