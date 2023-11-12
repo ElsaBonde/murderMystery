@@ -143,4 +143,15 @@ I have come to the realization that having a community of like-minded people to 
 ### 3.4 Maintenance and how to contact me
 This program will be updated the more Javascript I learn and when it is, this file will also be maintained.
 
-If you have any questions or find a bug in the program that you want to share, or if you want to help me build on the game, don't hesitate to contact me at (e.g.: elsasofiabonde@gmail.com).
+If you have any questions or find a bug in the program that you want to share don't hesitate to contact me at (e.g.: elsasofiabonde@gmail.com).
+
+#### 3.4.1 Contributing
+If you want to contribute to the game, follow these steps:
+1. Fork the project.
+2. Create a new branch for your work: 
+`git checkout -b your-new-branch`
+3. Make your changes and commit: 
+`git commit -m "Your change"`
+4. Push to your branch: 
+`git push origin your-new-branch`
+5. Create a pull request on GitHub.

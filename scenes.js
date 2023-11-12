@@ -1,6 +1,28 @@
+/**
+ * @type {number}
+ */
 let activeSceneIndex = 0; //deklarerar att activeSceneIndex är 0 tills detta förändras genom knapptryckningar från spelaren
+
+/**
+ * @type {string[]}
+ */
 const inventory = []; //array där saker spelaren plockat upp läggs
 
+/**
+ * @typedef {{
+ *   text: string,
+ *   asset: string,
+ *   asset2: string,
+ *   item1: { text: string, nextSceneIndex: number },
+ *   item2: { text: string, nextSceneIndex: number },
+ *   backgroundImage: string
+ * }} Scene
+ */
+
+/**
+ * A list of mocked scenes to use before we fetch them from our DB.
+ * @type {Scene[]}
+ */
 const scenes = [
   {
     //scen 0 - veranda
@@ -94,8 +116,24 @@ const scenes = [
   },
 ];
 
-//startpage content
+/**
+ * @typedef {{
+ *   h1: string,
+ *   h3: string,
+ *   h4: string,
+ *   p1: string,
+ *   p2: string,
+ *   p3: string,
+ *   backgroundImage: string
+ * }} Start
+ */
+
+/**
+ * A list of mocked scenes to use before we fetch them from our DB.
+ * @type {Start{}}
+ */
 const start = {
+  //startpage content
   h1: "MURDER MYSTERY",
   h3: "You're a private investigator on your way to a client who has experienced discomfort in her own house and is afraid that she has a stalker.. She called you screaming for help.",
   h4: "How to play the game:",
