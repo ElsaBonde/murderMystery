@@ -18,7 +18,6 @@ const inventory = []; //array där saker spelaren plockat upp läggs
  *   backgroundImage: string
  * }} Scene
  */
-
 /**
  * A list of mocked scenes to use before we fetch them from our DB.
  * @type {Scene[]}
@@ -109,7 +108,7 @@ const scenes = [
   },
   {
     //scen 6 - polisstation
-    text: "Thanks for your help, you were very brave! It was a smart move to run, since the killer was still in the house. We're taking over from now. Your clues will help us find and ultimately convict the suspect.",
+    text: "",
     item1: {},
     item2: {},
     backgroundImage: 'url("src/policestation.jpg")',
@@ -127,7 +126,6 @@ const scenes = [
  *   backgroundImage: string
  * }} Start
  */
-
 /**
  * A list of mocked scenes to use before we fetch them from our DB.
  * @type {Start{}}

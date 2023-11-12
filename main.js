@@ -2,6 +2,8 @@ window.addEventListener("DOMContentLoaded", main);
 
 //globala variabler för h1 och för ett audio element
 let message = document.createElement("h1");
+let playAgain = document.createElement("button");
+playAgain.textContent = "Play Again?";
 let audio;
 
 /**The first function to run calls the startGame function.*/
@@ -9,9 +11,9 @@ function main() {
   startGame();
 }
 
-/**First declares all existing dom elements from index.html and hides the 
- * elements that should only be displayed when the scenes array runs. 
- * Also creates a click event for the start button which removes all elements 
+/**First declares all existing dom elements from index.html and hides the
+ * elements that should only be displayed when the scenes array runs.
+ * Also creates a click event for the start button which removes all elements
  * on the start page and calls the function to show the first scene in "scenes".*/
 function startGame() {
   //hämtar med nedstående klasser (till höger) och ger dessa variabelnamn i js
@@ -65,10 +67,10 @@ function startGame() {
   });
 }
 
-/**Creates the variable that retrieves different sounds and displays it in the DOM. 
- * Checks through an if statement if a sound is already playing when a new sound arrives. 
- * If so, the first sound is paused and removed from the DOM. 
- * 
+/**Creates the variable that retrieves different sounds and displays it in the DOM.
+ * Checks through an if statement if a sound is already playing when a new sound arrives.
+ * If so, the first sound is paused and removed from the DOM.
+ *
  * @param {string} audioSrc url link that fetches the music*/
 function playAudio(audioSrc) {
   //funktion som spelar och pausar ljud
@@ -84,7 +86,7 @@ function playAudio(audioSrc) {
 }
 
 /**Gets elements for the scenes and declares them in Javascript.
- *  Creates click events for the button on the right and left and 
+ *  Creates click events for the button on the right and left and
  * calls many functions required for the game to function properly. */
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
@@ -140,15 +142,16 @@ function renderScene() {
   loseAndWin();
 }
 
-/**Checks if the user is in the kitchen and does not have the key in 
- * his/hers inventory. If this is true, a message is displayed to the user 
- * that he/she needs the key to proceed. If the user has the key and is in 
- * the kitchen, he/she can continue without a message. 
- * 
+/**Checks if the user is in the kitchen and does not have the key in
+ * his/hers inventory. If this is true, a message is displayed to the user
+ * that he/she needs the key to proceed. If the user has the key and is in
+ * the kitchen, he/she can continue without a message.
+ *
  * @param {object} scene Fetches the active scene*/
 function getIntoBedroom(scene) {
   //kollar ifall användaren har nyckeln i sitt inventory, annars säger den åt hen att hämta den i scen 0.
   if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
+    playAgain.className = "playAgainN";
     message.className = "messageN";
     message.textContent =
       "You need the key to go in there.. Hint: look around the porch.";
@@ -166,12 +169,13 @@ function getIntoBedroom(scene) {
 }
 
 /**Through an else if statement, finds out whether the user is in the bedroom
- *  and has the phone in his inventory or not. If the user has the phone, 
- * a message is displayed that the police are being called, if not, the message 
+ *  and has the phone in his inventory or not. If the user has the phone,
+ * a message is displayed that the police are being called, if not, the message
  * instead reads that the player should pick up the phone that is on the porch. */
 function checkForPhone() {
   //kollar om användaren har telefonen i sitt inventory när den befinenr sig i sovrummet och har olika beteende beroende på det.
   if (activeSceneIndex === 3 && !inventory.includes(scenes[0].asset)) {
+    playAgain.className = "playAgain";
     message.className = "message";
     message.textContent =
       "You should really try to find the phone to be able to call the police.. Hint: Go to the porch.";
@@ -183,7 +187,7 @@ function checkForPhone() {
     document.body.appendChild(message);
   } else if (activeSceneIndex === 3 && inventory.includes(scenes[0].asset)) {
     message.textContent =
-      "Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!";
+      "Good thing you had the phone to call the police!\n 'Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!'";
     text.style.display = "none";
 
     setTimeout(function () {
@@ -193,12 +197,12 @@ function checkForPhone() {
   }
 }
 
-/**Finds out if the user is in the lit bathroom (end scene). If the user is, 
- * the function checks if there is a gun and bullets in the inventory. 
- * If there is, a gunshot sound is played and a message that the player has won 
- * by shooting the killer is displayed. If not, a message is displayed instead 
- * stating that the user has lost and died and gone to heaven while playing a failure sound. 
- * 
+/**Finds out if the user is in the lit bathroom (end scene). If the user is,
+ * the function checks if there is a gun and bullets in the inventory.
+ * If there is, a gunshot sound is played and a message that the player has won
+ * by shooting the killer is displayed. If not, a message is displayed instead
+ * stating that the user has lost and died and gone to heaven while playing a failure sound.
+ *
  * @param {HTMLButtonElement} button1 Is a HTML button element
  * @param {HTMLButtonElement} button2 Is a HTML button element
  * */
@@ -206,6 +210,7 @@ function checkInventoryForWinLose(button1, button2) {
   //kollar av inventory i den slutliga scenen om man väljer att attackera mördare.
   //skapar ny h1tag och ger den klassen message
   message.className = "message";
+  playAgain.className = "playAgain";
 
   //om man är i scenen med index 5
   if (activeSceneIndex === 5) {
@@ -223,6 +228,8 @@ function checkInventoryForWinLose(button1, button2) {
       button2.style.display = "none";
 
       document.body.appendChild(message);
+      document.body.appendChild(playAgain);
+      newGame(playAgain);
       playAudio("src/sounds/gunshot.mp3");
     } else {
       message.textContent =
@@ -234,15 +241,17 @@ function checkInventoryForWinLose(button1, button2) {
       document.body.style.backgroundImage = 'url("src/losegame.png")';
 
       document.body.appendChild(message);
+      document.body.appendChild(playAgain);
+      newGame(playAgain);
       playAudio("src/sounds/fail.mp3");
     }
   }
 }
 
-/**In this function there is a condition that checks if asset and asset2 
+/**In this function there is a condition that checks if asset and asset2
  * exist on the object in the scene, if it does it is rendered, if not it is hidden.
- * Also checks if users have already added it to inventory, if they 
- * have then the item is hidden.Also gives asset and asset2 click event which causes 
+ * Also checks if users have already added it to inventory, if they
+ * have then the item is hidden.Also gives asset and asset2 click event which causes
  * them to be added to inventory and emit sound when the player picks them up. */
 function collectJoinAndDisplayAssets(
   addAssetButton,
@@ -303,33 +312,34 @@ function collectJoinAndDisplayAssets(
   };
 }
 
-/**Checks if the user is on stage 6, which means it ran away from the killer. 
+/**Checks if the user is on stage 6, which means it ran away from the killer.
  * If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed. */
 function loseAndWin() {
   //funktion som körs när man väljer att springa iväg i sista scenen
   const message = document.createElement("h1");
   if (activeSceneIndex === 6) {
     playAudio("src/sounds/cops.mp3");
+    playAgain.className = "playAgainN";
     message.className = "messageN";
     message.textContent = "You either lose or win the game since you ran away.";
 
     footer.style.display = "none";
     text.style.display = "none";
 
-    setTimeout(function () {
-      document.body.removeChild(message);
-      text.style.display = "block";
-    }, 4000);
+    document.body.appendChild(message);
+    document.body.appendChild(playAgain);
+    newGame(playAgain);
   }
 
-  document.body.appendChild(message);
+  /* document.body.appendChild(message);
+  document.body.appendChild(playAgain); */
 }
 
-/**Determines when the right and left buttons should not be displayed 
- * 
-* @param {HTMLButtonElement} button1 Is a HTML button element
-* @param {HTMLButtonElement} button2 Is a HTML button element
-*/
+/**Determines when the right and left buttons should not be displayed
+ *
+ * @param {HTMLButtonElement} button1 Is a HTML button element
+ * @param {HTMLButtonElement} button2 Is a HTML button element
+ */
 function showButton(button1, button2) {
   //tar hand om när knapparna för att förflytta sig mellan rum ska visas och inte
   //visa inte vänster knapp på scen 0, 4 eller 6
@@ -347,9 +357,9 @@ function showButton(button1, button2) {
   }
 }
 
-/**Changes the activeSceneIndex to the scene currently active in the game, 
- * then runs the function that fetches all elements for the active scene. 
- * 
+/**Changes the activeSceneIndex to the scene currently active in the game,
+ * then runs the function that fetches all elements for the active scene.
+ *
  * @param {number} sceneIndex Fetches the active sceneIndex number
  */
 function goNextScene(sceneIndex) {
@@ -358,8 +368,8 @@ function goNextScene(sceneIndex) {
   renderScene(); //kör funktionen renderscene som hämtar hem allting för den aktiva scenen
 }
 
-/**Determines that all elements in scenes should be displayed 
- * 
+/**Determines that all elements in scenes should be displayed.
+ *
  * @param {HTMLButtonElement} button1 Is a HTML button element
  * @param {HTMLButtonElement} button2 Is a HTML button element
  * @param {string} text Gets text element
@@ -367,7 +377,7 @@ function goNextScene(sceneIndex) {
  * @param {object} item2 Gets the object
  * @param {HTMLElement} body Fetches body HTML element
  * @param {HTMLElement} footer Fetches footer HTML element wich icludes inventory
-*/
+ */
 function setDisplayStyle(button1, button2, text, item1, item2, body, footer) {
   button1.style.display = "block";
   button2.style.display = "block";
@@ -378,8 +388,8 @@ function setDisplayStyle(button1, button2, text, item1, item2, body, footer) {
   footer.style.display = "block";
 }
 
-/**Make the power button for lamp only appear in the dark bathroom and 
- * give it a click event that leads to the light bathroom */
+/**Make the power button for lamp only appear in the dark bathroom and
+ * give it a click event that leads to the light bathroom. */
 function powerButton() {
   //skapar variabel för lampknappen
   const powerSwitchButton = document.getElementById("powerSwitch");
@@ -393,5 +403,16 @@ function powerButton() {
   powerSwitchButton.addEventListener("click", function () {
     activeSceneIndex = 5;
     renderScene();
+  });
+}
+
+/**
+ *Creates an on click event for the "Play Again" button.
+ *
+ * @param {HTMLButtonElement} playAgain Button that asks if the player wants to play again
+ */
+function newGame(playAgain) {
+  playAgain.addEventListener("click", function () {
+    window.location.href = "http://127.0.0.1:5501/index.html";
   });
 }

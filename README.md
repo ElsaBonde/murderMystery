@@ -110,16 +110,19 @@ _Also gives asset and asset2 click event which causes them to be added to invent
 _Checks if the user is on stage 6, which means it ran away from the killer. If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed._
 
 - **showButton(button1, button2)**\
-_Determines when the right and left buttons should not be displayed_
+_Determines when the right and left buttons should not be displayed._
 
 - **goNextScene(sceneIndex)**\
 _Changes the activeSceneIndex to the scene currently active in the game, then runs the function that fetches all elements for the active scene._
 
 - **setDisplayStyle(button1, button2, text, item1, item2, body, footer)**\
-_Determines that all elements in scenes should be displayed_
+_Determines that all elements in scenes should be displayed._
 
 - **powerButton()**\
-_Make the power button for lamp only appear in the dark bathroom and give it a click event that leads to the light bathroom_
+_Make the power button for lamp only appear in the dark bathroom and give it a click event that leads to the light bathroom._
+
+- **newGame(playAgain)**\
+_Creates an on click event for the "Play Again" button._
 
 ---
 
