@@ -1,8 +1,8 @@
 # Murder mystery 
-_A simple game mainly made in vanilla Javascript._
+_A simple game mainly made using vanilla Javascript._
  
 ## 1. Project description
-In this game, the player must find various objects and navigate between several rooms to solve a murder mystery. There are three different endings depending on what the player has picked up during the game. The different rooms in the game can also change behavior depending on what the player has in his/hers inventory.
+In this game, the player must find various objects and navigate between several rooms to solve a murder mystery. There are three different endings depending on what the player has picked up throughout the game and what he/she chooses to do in the final scene. The different rooms in the game can also change behavior depending on what the player has in his/hers inventory.
 
 ### 1.1 Possible endings for the game
 
@@ -54,8 +54,6 @@ All scenes in the game are in an array made in Javascript that retrieves content
 - Two objects that are the buttons the player uses to navigate between rooms. In these objects there is a text and "nextSceneIndex"
 - A background image
 
-
-
 ### 2.2 Global variables
 There are few global variables in the code, because I wanted to avoid them. Those that exist and what their main task is, is shown below:
 
@@ -77,8 +75,6 @@ _Called several times in different functions to generate a message to the player
 
 - **let audio;**\
 _Used to give different sounds to scenes and elements._
-
-
 
 ### 2.3 The functions
 Let's talk briefly about the functions, which are the funniest part of the whole game and what helps it become interactive. Below is a little about each function:
@@ -125,7 +121,21 @@ _Determines that all elements in scenes should be displayed_
 - **powerButton()**\
 _Make the power button for lamp only appear in the dark bathroom and give it a click event that leads to the light bathroom_
 
- 
+---
+
+## 3. Learn more about the project
+This game was made as a school project and is the first project I ever created using Javascript as the main language.\
+I wanted to learn about arrays, loops and if else conditions, which led to a large part of the code for the program being made with these very parts.
+
+### 3.1 Tools used to create the game
+To create the program I have used Html5, Css3 and JavaScript. The wallpapers are AI generated using [Gencraft.com](https://gencraft.com/generate) and I then added creepy details using the program [InkScape version 1.3](https://inkscape.org/release/inkscape-1.3/windows/64-bit/msi/?redirected=1). The various sound effects in the program were downloaded from [Fesliyanstudios.com](https://www.fesliyanstudios.com/) and [Pixabay.com](https://pixabay.com/sound-effects/search/door/). A big thanks to these sources and free image and editing software.
+
+### 3.2 What I learned working on this project
+While working on the game, I have learned to search for answers and how to ask a question as clearly as possible. This is when you get the best help and thus learn to solve problems on your own.\
+
+I've also learned that patience is probably the best quality you can have when learning a new programming language.\
+
+I have come to the realization that having a community of like-minded people to bounce problems with is very helpful and should not be taken for granted when you are a beginner at something, both by teaching and learning.
 
 <!-- > "aasdasd asdas da sdhgas d
 > asdasdasd"
