@@ -1,10 +1,10 @@
 /**
- * @type {number}
+ * @type {number} Gives activeSceneIndex a default value of 0
  */
-let activeSceneIndex = 0; //deklarerar att activeSceneIndex är 0 tills detta förändras genom knapptryckningar från spelaren
+let activeSceneIndex = 0;
 
 /**
- * @type {string[]}
+ * @type {string[]} Going to be img tags in an array, you call for these as a string
  */
 const inventory = []; //array där saker spelaren plockat upp läggs
 
@@ -13,14 +13,13 @@ const inventory = []; //array där saker spelaren plockat upp läggs
  *   text: string,
  *   asset: string,
  *   asset2: string,
- *   item1: { text: string, nextSceneIndex: number },
- *   item2: { text: string, nextSceneIndex: number },
+ *   buttonLeft: { text: string, nextSceneIndex: number },
+ *   buttonRight: { text: string, nextSceneIndex: number },
  *   backgroundImage: string
  * }} Scene
  */
 /**
- * A list of mocked scenes to use before we fetch them from our DB.
- * @type {Scene[]}
+ * @type {Scene[]} Defines that scenes is an array with scenes
  */
 const scenes = [
   {
@@ -28,8 +27,8 @@ const scenes = [
     text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
     asset: "src/inventoryitems/iphone.png",
     asset2: "src/inventoryitems/keys.png",
-    item1: {},
-    item2: {
+    buttonLeft: {},
+    buttonRight: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
     },
@@ -40,11 +39,11 @@ const scenes = [
     text: "It looks like there are two things to add to your inventory! Collect them, they may come in handy later on..",
     asset: "src/inventoryitems/fingerprintPowder.png",
     asset2: "src/inventoryitems/bullets.png",
-    item1: {
+    buttonLeft: {
       text: "Go to porch",
       nextSceneIndex: 0,
     },
-    item2: {
+    buttonRight: {
       text: "Go to kitchen",
       nextSceneIndex: 2,
     },
@@ -55,11 +54,11 @@ const scenes = [
     text: "Oh my god! There is blood here, maybe this is where the victim was attacked?",
     asset: "src/inventoryitems/blodkniv.png",
     asset2: "src/inventoryitems/tape.png",
-    item1: {
+    buttonLeft: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
     },
-    item2: {
+    buttonRight: {
       text: "Go to bedroom",
       nextSceneIndex: 3,
     },
@@ -70,11 +69,11 @@ const scenes = [
     text: "Call 911! Quick, click the right item in your inventory to call the police. If you don't have it you should look for it on the porch",
     asset: "src/inventoryitems/gun.png",
     asset2: "",
-    item1: {
+    buttonLeft: {
       text: "Go to kitchen",
       nextSceneIndex: 2,
     },
-    item2: {
+    buttonRight: {
       text: "Go to bathroom",
       nextSceneIndex: 4,
     },
@@ -83,11 +82,11 @@ const scenes = [
   {
     //scen 4 - badrum släckt
     text: "This room was so creepy, I can't seem to find any way out.. Its so dark in here, maybe you should turn on the light?",
-    item1: {
+    buttonLeft: {
       text: "Go to bedroom",
       nextSceneIndex: 3,
     },
-    item2: {
+    buttonRight: {
       text: "Turn the light on",
       nextSceneIndex: 5,
     },
@@ -96,11 +95,11 @@ const scenes = [
   {
     //scen 5 - badrum tänt
     text: "AHHHH!! Make a quick decision about whether you want to run for your life or whether you want to attack the person in front of you.",
-    item1: {
+    buttonLeft: {
       text: "Run for your life",
       nextSceneIndex: 6,
     },
-    item2: {
+    buttonRight: {
       text: "Attack",
       nextSceneIndex: 5,
     },
@@ -109,8 +108,8 @@ const scenes = [
   {
     //scen 6 - polisstation
     text: "",
-    item1: {},
-    item2: {},
+    buttonLeft: {},
+    buttonRight: {},
     backgroundImage: 'url("src/policestation.jpg")',
   },
 ];

@@ -1,9 +1,19 @@
 window.addEventListener("DOMContentLoaded", main);
 
-//globala variabler för h1 och för ett audio element
+/**
+ * @type {HTMLHeadingElement} Is a h1 text element
+ */
 let message = document.createElement("h1");
+
+/**
+ * @type {HTMLButtonElement} Defines a button element
+ */
 let playAgain = document.createElement("button");
 playAgain.textContent = "Play Again?";
+
+/**
+ * @type {string} String that will call for an mp3 file later on
+ */
 let audio;
 
 /**The first function to run calls the startGame function.*/
@@ -23,14 +33,14 @@ function startGame() {
   const startP = document.querySelectorAll(".startP");
 
   //hämtar hem id för knapparna i scenerna
-  const button1 = document.getElementById("item-1-b");
-  const button2 = document.getElementById("item-2-b");
+  const leftButton = document.getElementById("leftButton");
+  const rightButton = document.getElementById("rightButton");
   const addAssetButton = document.getElementById("asset-b");
   const addAssetButton2 = document.getElementById("asset-b2");
 
   //gör så att knapparna inte syns på startsidan
-  button1.style.display = "none";
-  button2.style.display = "none";
+  leftButton.style.display = "none";
+  rightButton.style.display = "none";
   addAssetButton.style.display = "none";
   addAssetButton2.style.display = "none";
 
@@ -71,7 +81,8 @@ function startGame() {
  * Checks through an if statement if a sound is already playing when a new sound arrives.
  * If so, the first sound is paused and removed from the DOM.
  *
- * @param {string} audioSrc url link that fetches the music*/
+ * @param {HTMLAudioElement} audioSrc url link that fetches the music
+ * */
 function playAudio(audioSrc) {
   //funktion som spelar och pausar ljud
   //befintligt ljud pausas om något redan spelas
@@ -91,26 +102,34 @@ function playAudio(audioSrc) {
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
   const text = document.getElementById("text");
-  const item1 = document.getElementById("item-1");
-  const item2 = document.getElementById("item-2");
+  const buttonLeft = document.getElementById("leftButtonText");
+  const buttonRight = document.getElementById("rightButtonText");
   const footer = document.getElementById("footer");
   const body = document.body;
 
-  const button1 = document.getElementById("item-1-b");
-  const button2 = document.getElementById("item-2-b");
+  const leftButton = document.getElementById("leftButton");
+  const rightButton = document.getElementById("rightButton");
   const addAssetButton = document.getElementById("asset-b");
   const addAssetButton2 = document.getElementById("asset-b2");
   const assetImage = document.getElementById("asset-image");
   const asset2Image = document.getElementById("asset-image2");
   const inventoryFooter = document.getElementById("inventory");
 
-  setDisplayStyle(button1, button2, text, item1, item2, body, footer);
+  setDisplayStyle(
+    leftButton,
+    rightButton,
+    text,
+    buttonLeft,
+    buttonRight,
+    body,
+    footer
+  );
 
   const scene = scenes[activeSceneIndex]; //skapar variabel som hämtar hem den aktiva scenen spelaren befinner sig på i arrayen scenes
 
   text.textContent = scene.text; //hämtar hem alla textelementen i objektet för aktiv scen och visar dessa
-  item1.textContent = scene.item1.text;
-  item2.textContent = scene.item2.text;
+  buttonLeft.textContent = scene.buttonLeft.text;
+  buttonRight.textContent = scene.buttonRight.text;
   body.style.backgroundImage = scene.backgroundImage; //ändrar style för bodyn backgrundbild utefter aktivt element
 
   collectJoinAndDisplayAssets(
@@ -122,22 +141,22 @@ function renderScene() {
     scene
   );
 
-  //när man klickar på item1 (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
-  item1.onclick = function () {
+  //när man klickar på buttonLeft (vänster knapp) går man till scenen som objektets egenskap kallar på ett scenindex i arrayen för scener
+  buttonLeft.onclick = function () {
     //pausar musiken
     playAudio("");
-    goNextScene(scene.item1.nextSceneIndex);
+    goNextScene(scene.buttonLeft.nextSceneIndex);
   };
 
-  item2.onclick = function () {
+  buttonRight.onclick = function () {
     playAudio("");
     // om aktivt scenindex är 2 (köket) och användaren INTE har nyckeln i sitt inventory
     getIntoBedroom(scene);
-    checkInventoryForWinLose(button1, button2);
+    checkInventoryForWinLose(leftButton, rightButton);
     checkForPhone();
   };
 
-  showButton(button1, button2);
+  showButton(leftButton, rightButton);
   powerButton();
   loseAndWin();
 }
@@ -147,11 +166,11 @@ function renderScene() {
  * that he/she needs the key to proceed. If the user has the key and is in
  * the kitchen, he/she can continue without a message.
  *
- * @param {object} scene Fetches the active scene*/
+ * @param {object} scene Fetches the active scene
+ * */
 function getIntoBedroom(scene) {
   //kollar ifall användaren har nyckeln i sitt inventory, annars säger den åt hen att hämta den i scen 0.
   if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
-    playAgain.className = "playAgainN";
     message.className = "messageN";
     message.textContent =
       "You need the key to go in there.. Hint: look around the porch.";
@@ -164,12 +183,12 @@ function getIntoBedroom(scene) {
     document.body.appendChild(message);
   } else {
     //användaren har rätt objekt, gå till nästa scen
-    goNextScene(scene.item2.nextSceneIndex);
+    goNextScene(scene.buttonRight.nextSceneIndex);
   }
 }
 
 /**Through an else if statement, finds out whether the user is in the bedroom
- *  and has the phone in his inventory or not. If the user has the phone,
+ * and has the phone in his inventory or not. If the user has the phone,
  * a message is displayed that the police are being called, if not, the message
  * instead reads that the player should pick up the phone that is on the porch. */
 function checkForPhone() {
@@ -183,16 +202,16 @@ function checkForPhone() {
 
     setTimeout(function () {
       document.body.removeChild(message);
-    }, 8000);
+    }, 4000);
     document.body.appendChild(message);
   } else if (activeSceneIndex === 3 && inventory.includes(scenes[0].asset)) {
     message.textContent =
-      "Good thing you had the phone to call the police!\n 'Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!'";
+      "Good thing you had the phone to call the police!\r\n'Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!'";
     text.style.display = "none";
 
     setTimeout(function () {
       document.body.removeChild(message);
-    }, 8000);
+    }, 6000);
     document.body.appendChild(message);
   }
 }
@@ -203,10 +222,10 @@ function checkForPhone() {
  * by shooting the killer is displayed. If not, a message is displayed instead
  * stating that the user has lost and died and gone to heaven while playing a failure sound.
  *
- * @param {HTMLButtonElement} button1 Is a HTML button element
- * @param {HTMLButtonElement} button2 Is a HTML button element
+ * @param {HTMLButtonElement} leftButton Is a HTML button element
+ * @param {HTMLButtonElement} rightButton Is a HTML button element
  * */
-function checkInventoryForWinLose(button1, button2) {
+function checkInventoryForWinLose(leftButton, rightButton) {
   //kollar av inventory i den slutliga scenen om man väljer att attackera mördare.
   //skapar ny h1tag och ger den klassen message
   message.className = "message";
@@ -224,8 +243,8 @@ function checkInventoryForWinLose(button1, button2) {
 
       footer.style.display = "none";
       text.style.display = "none";
-      button1.style.display = "none";
-      button2.style.display = "none";
+      leftButton.style.display = "none";
+      rightButton.style.display = "none";
 
       document.body.appendChild(message);
       document.body.appendChild(playAgain);
@@ -236,8 +255,8 @@ function checkInventoryForWinLose(button1, button2) {
         "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died, but at least you went to heaven.";
       footer.style.display = "none";
       text.style.display = "none";
-      button1.style.display = "none";
-      button2.style.display = "none";
+      leftButton.style.display = "none";
+      rightButton.style.display = "none";
       document.body.style.backgroundImage = 'url("src/losegame.png")';
 
       document.body.appendChild(message);
@@ -337,10 +356,10 @@ function loseAndWin() {
 
 /**Determines when the right and left buttons should not be displayed
  *
- * @param {HTMLButtonElement} button1 Is a HTML button element
- * @param {HTMLButtonElement} button2 Is a HTML button element
+ * @param {HTMLButtonElement} leftButton Is a HTML button element
+ * @param {HTMLButtonElement} rightButton Is a HTML button element
  */
-function showButton(button1, button2) {
+function showButton(leftButton, rightButton) {
   //tar hand om när knapparna för att förflytta sig mellan rum ska visas och inte
   //visa inte vänster knapp på scen 0, 4 eller 6
   if (
@@ -348,12 +367,12 @@ function showButton(button1, button2) {
     activeSceneIndex == 4 ||
     activeSceneIndex === 6
   ) {
-    button1.style.display = "none";
+    leftButton.style.display = "none";
   }
 
   //visa inte höger knapp på scen 4 eller 6
   if (activeSceneIndex === 4 || activeSceneIndex === 6) {
-    button2.style.display = "none";
+    rightButton.style.display = "none";
   }
 }
 
@@ -370,20 +389,28 @@ function goNextScene(sceneIndex) {
 
 /**Determines that all elements in scenes should be displayed.
  *
- * @param {HTMLButtonElement} button1 Is a HTML button element
- * @param {HTMLButtonElement} button2 Is a HTML button element
+ * @param {HTMLButtonElement} leftButton Is a HTML button element
+ * @param {HTMLButtonElement} rightButton Is a HTML button element
  * @param {string} text Gets text element
- * @param {object} item1 Gets the object
- * @param {object} item2 Gets the object
+ * @param {object} buttonLeft Gets the object
+ * @param {object} buttonRight Gets the object
  * @param {HTMLElement} body Fetches body HTML element
  * @param {HTMLElement} footer Fetches footer HTML element wich icludes inventory
  */
-function setDisplayStyle(button1, button2, text, item1, item2, body, footer) {
-  button1.style.display = "block";
-  button2.style.display = "block";
+function setDisplayStyle(
+  leftButton,
+  rightButton,
+  text,
+  buttonLeft,
+  buttonRight,
+  body,
+  footer
+) {
+  leftButton.style.display = "block";
+  rightButton.style.display = "block";
   text.style.display = "block";
-  item1.style.display = "block";
-  item2.style.display = "block";
+  buttonLeft.style.display = "block";
+  buttonRight.style.display = "block";
   body.style.display = "content";
   footer.style.display = "block";
 }
