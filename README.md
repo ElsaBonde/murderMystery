@@ -131,7 +131,7 @@ This game was made as a school project and is the first project I ever created u
 I wanted to learn about arrays, loops and if else conditions, which led to a large part of the code for the program being made with these very parts.
 
 ### 3.1 What is needed to run the program
-To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
+To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, please contact me at (e.g.: elsasofiabonde@gmail.com).
 
 ### 3.2 Tools used to create the game
 To create the program I have used Html5, Css3 and JavaScript. The wallpapers are AI generated using [Gencraft.com](https://gencraft.com/generate) and I then added creepy details using the program [InkScape version 1.3](https://inkscape.org/release/inkscape-1.3/windows/64-bit/msi/?redirected=1). The various sound effects in the program were downloaded from [Fesliyanstudios.com](https://www.fesliyanstudios.com/) and [Pixabay.com](https://pixabay.com/sound-effects/search/door/). A big thanks to these sources and free image and editing software.
