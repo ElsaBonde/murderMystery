@@ -6,7 +6,7 @@ let activeSceneIndex = 0;
 /**
  * @type {string[]} Going to be img tags in an array, you call for these as a string
  */
-const inventory = []; //array där saker spelaren plockat upp läggs
+let inventory = []; //array där saker spelaren plockat upp läggs
 
 /**
  * @typedef {{
@@ -18,6 +18,13 @@ const inventory = []; //array där saker spelaren plockat upp läggs
  *   backgroundImage: string
  * }} Scene
  */
+
+const keys = "src/inventoryitems/keys.png";
+const iphone = "src/inventoryitems/iphone.png";
+const powder = "src/inventoryitems/fingerprintPowder.png";
+const bullets = "src/inventoryitems/bullets.png";
+
+
 /**
  * @type {Scene[]} Defines that scenes is an array with scenes
  */
@@ -25,8 +32,8 @@ const scenes = [
   {
     //scen 0 - veranda
     text: "Pick up the items you can see to put them in your inventory. Maybe they'll come in handy later. After that you might want to step into the house?",
-    asset: "src/inventoryitems/iphone.png",
-    asset2: "src/inventoryitems/keys.png",
+    asset: iphone,
+    asset2: keys,
     buttonLeft: {},
     buttonRight: {
       text: "Go to livingroom",
@@ -37,8 +44,8 @@ const scenes = [
   {
     //scen 1 - vardagsrum
     text: "It looks like there are two things to add to your inventory! Collect them, they may come in handy later on..",
-    asset: "src/inventoryitems/fingerprintPowder.png",
-    asset2: "src/inventoryitems/bullets.png",
+    asset: powder,
+    asset2: bullets,
     buttonLeft: {
       text: "Go to porch",
       nextSceneIndex: 0,
@@ -132,7 +139,7 @@ const scenes = [
 const start = {
   //startpage content
   h1: "MURDER MYSTERY",
-  h3: "You're a private investigator on your way to a client who has experienced discomfort in her own house and is afraid that she has a stalker.. She called you screaming for help.",
+  h3: "You're a private investigator on your way to a client who has experienced discomfort in her own house and is afraid that she has a stalker... She called you screaming for help.",
   h4: "How to play the game:",
   p1: "1. Search the environment around you and collect objects.",
   p2: "2. Use the items you have previously found when needed in the game, for example to get into new locations or to use to create new items.",

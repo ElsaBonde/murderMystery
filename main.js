@@ -113,7 +113,6 @@ function renderScene() {
   const addAssetButton2 = document.getElementById("asset-b2");
   const assetImage = document.getElementById("asset-image");
   const asset2Image = document.getElementById("asset-image2");
-  const inventoryFooter = document.getElementById("inventory");
 
   setDisplayStyle(
     leftButton,
@@ -137,7 +136,6 @@ function renderScene() {
     addAssetButton2,
     assetImage,
     asset2Image,
-    inventoryFooter,
     scene
   );
 
@@ -170,7 +168,7 @@ function renderScene() {
  * */
 function getIntoBedroom(scene) {
   //kollar ifall användaren har nyckeln i sitt inventory, annars säger den åt hen att hämta den i scen 0.
-  if (activeSceneIndex === 2 && !inventory.includes(scenes[0].asset2)) {
+  if (activeSceneIndex === 2 && !inventory.includes(keys)) {
     message.className = "messageN";
     message.textContent =
       "You need the key to go in there.. Hint: look around the porch.";
@@ -182,8 +180,19 @@ function getIntoBedroom(scene) {
     }, 4000);
     document.body.appendChild(message);
   } else {
-    //användaren har rätt objekt, gå till nästa scen
     goNextScene(scene.buttonRight.nextSceneIndex);
+  }
+  if (activeSceneIndex === 3) {
+       removeKeys();
+    renderInventory();
+  }
+}
+
+function removeKeys() {
+  const keysIndex = inventory.indexOf(keys);
+
+  if (keysIndex !== -1) {
+    inventory.splice(keysIndex, 1);
   }
 }
 
@@ -277,7 +286,6 @@ function collectJoinAndDisplayAssets(
   addAssetButton2,
   assetImage,
   asset2Image,
-  inventoryFooter,
   scene
 ) {
   /* villkor som kollar om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
@@ -308,11 +316,7 @@ function collectJoinAndDisplayAssets(
       addAssetButton.style.display = "none";
 
       //skapar element för bilden i scenens asset som läggs i inventory footern
-      const img = document.createElement("img");
-      img.className = "inventoryImg";
-      img.src = scene.asset;
-      img.alt = "Asset Image";
-      inventoryFooter.appendChild(img);
+      renderInventory();
     }
   };
 
@@ -322,13 +326,21 @@ function collectJoinAndDisplayAssets(
       inventory.push(scene.asset2);
       playAudio("src/sounds/pickup.mp3");
       addAssetButton2.style.display = "none";
-      const img2 = document.createElement("img");
-      img2.className = "inventoryImg";
-      img2.src = scene.asset2;
-      img2.alt = "Asset Image";
-      inventoryFooter.appendChild(img2);
+      renderInventory();
     }
   };
+}
+
+function renderInventory() {
+  const inventoryFooter = document.getElementById("inventory");
+  inventoryFooter.innerHTML = "";
+  for (const itemUrl of inventory) {
+    const img = document.createElement("img");
+    img.className = "inventoryImg";
+    img.src = itemUrl;
+    img.alt = "Asset Image";
+    inventoryFooter.appendChild(img);
+  }
 }
 
 /**Checks if the user is on stage 6, which means it ran away from the killer.
@@ -440,6 +452,6 @@ function powerButton() {
  */
 function newGame(playAgain) {
   playAgain.addEventListener("click", function () {
-    window.location.href = "http://127.0.0.1:5501/index.html";
+    window.location.href = "https://elsabonde.github.io/murdermystery/";
   });
 }
