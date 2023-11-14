@@ -146,6 +146,7 @@ button {
 
 .inventoryImg {
   height: 3rem;
+  padding-right: 0.4rem;
 }
 
 .message {

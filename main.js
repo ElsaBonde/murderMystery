@@ -1,4 +1,20 @@
-window.addEventListener("DOMContentLoaded", main);
+window.addEventListener("DOMContentLoaded", function() {
+  //hämtar värdet för sparat sceneindex
+  const savedSceneIndex = localStorage.getItem("activeSceneIndex");
+
+  //om det sparade scenindexet har ett riktigt värde så 
+  if (savedSceneIndex !== null) {
+    //ges activesceneindex det värdet
+    activeSceneIndex = parseInt(savedSceneIndex);
+    //scenen körs sedan och gömmer startspelselementen
+    renderInventory();
+    renderScene();
+    hideStartGameElements();
+    
+  } else { //ladda startscenen om inget sparats i local storage
+    startGame();
+  }
+});
 
 /**
  * @type {HTMLHeadingElement} Is a h1 text element
@@ -15,6 +31,14 @@ playAgain.textContent = "Play Again?";
  * @type {string} String that will call for an mp3 file later on
  */
 let audio;
+
+function hideStartGameElements() {
+  const startGameButton = document.getElementById("startGameButton");
+  const textBox = document.querySelector(".textBox");
+  
+  startGameButton.style.display = "none";
+  textBox.style.display = "none";
+}
 
 /**
  * The first function to run calls the startGame function.
@@ -53,7 +77,7 @@ function startGame() {
 }
 
 /**
- * Retrieves necessary elements to initialize the game's start interface, 
+ * Retrieves necessary elements to initialize the game's start interface,
  * sets initial display styles, and populates with content.
  */
 function getElementsToStartGame() {
@@ -111,7 +135,7 @@ function playAudio(audioSrc) {
 /**
  * Gets elements for the scenes and declares them in Javascript.
  * Creates click events for the button on the right and left and
- * calls many functions required for the game to function properly. 
+ * calls many functions required for the game to function properly.
  * */
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
@@ -221,7 +245,7 @@ function removeKeys() {
  * Through an else if statement, finds out whether the user is in the bedroom
  * and has the phone in his inventory or not. If the user has the phone,
  * a message is displayed that the police are being called, if not, the message
- * instead reads that the player should pick up the phone that is on the porch. 
+ * instead reads that the player should pick up the phone that is on the porch.
  */
 function checkForPhone() {
   //kollar om användaren har telefonen i sitt inventory när den befinenr sig i sovrummet och har olika beteende beroende på det.
@@ -339,6 +363,8 @@ function handleButtonClick(sceneAsset, inventory, buttonElement, pickupSound) {
       playAudio(pickupSound);
       buttonElement.style.display = "none";
       renderInventory();
+
+      localStorage.setItem("inventory", JSON.stringify(inventory));
     }
   };
 }
@@ -384,6 +410,7 @@ function manageSceneAssetsAndButtons(
 function renderInventory() {
   const inventoryFooter = document.getElementById("inventory");
   inventoryFooter.innerHTML = "";
+  
   for (const itemUrl of inventory) {
     const img = document.createElement("img");
     img.className = "inventoryImg";
@@ -391,11 +418,12 @@ function renderInventory() {
     img.alt = "Asset Image";
     inventoryFooter.appendChild(img);
   }
+  localStorage.setItem("inventory", JSON.stringify(inventory)); //uppdaterar inventory i localStorage
 }
 
 /**
  * Checks if the user is on stage 6, which means it ran away from the killer.
- * If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed. 
+ * If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed.
  */
 function loseAndWin() {
   //funktion som körs när man väljer att springa iväg i sista scenen
@@ -449,6 +477,7 @@ function goNextScene(sceneIndex) {
   //gör om det aktiva sceneindex till sidan man nu befinner sig, är man ex på scen med indexvärde 1 (vardagsrummet) och trycker på item två (högra knappen) så komemr man iom objektets egenskaper till scenen med indexvärde två (köket)
   activeSceneIndex = sceneIndex; //ändrar activesceneindex till sceneindexet som nu är aktivt
   renderScene(); //kör funktionen renderscene som hämtar hem allting för den aktiva scenen
+  localStorage.setItem("activeSceneIndex", activeSceneIndex.toString());
 }
 
 /**
@@ -507,6 +536,12 @@ function powerButton() {
  */
 function newGame(playAgain) {
   playAgain.addEventListener("click", function () {
-    window.location.href = "https://elsabonde.github.io/murdermystery/";
+    //rensar localStorage
+    localStorage.removeItem("inventory");
+    localStorage.removeItem("activeSceneIndex");
+
+    //återställ aktiva scenen till start och ladda om sidan
+    localStorage.setItem("activeSceneIndex", "0");
+    window.location.reload();
   });
 }

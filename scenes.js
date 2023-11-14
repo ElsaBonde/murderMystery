@@ -1,12 +1,11 @@
 /**
- * @type {number} Gives activeSceneIndex a default value of 0
+ * @type {number} Gives activeSceneIndex a default value of 0 or get the value from LS
  */
-let activeSceneIndex = 0;
+let activeSceneIndex = parseInt(localStorage.getItem("activeSceneIndex")) || 0;
 
-/**
- * @type {string[]} Going to be img tags in an array, you call for these as a string
- */
-let inventory = []; //array där saker spelaren plockat upp läggs
+
+let storedInventory = localStorage.getItem("inventory");
+let inventory = storedInventory ? JSON.parse(storedInventory) : [];
 
 /**
  * @typedef {{
