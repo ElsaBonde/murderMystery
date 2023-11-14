@@ -16,17 +16,47 @@ playAgain.textContent = "Play Again?";
  */
 let audio;
 
-/**The first function to run calls the startGame function.*/
+/**
+ * The first function to run calls the startGame function.
+ * */
 function main() {
   startGame();
 }
 
-/**First declares all existing dom elements from index.html and hides the
+/**
+ * First declares all existing dom elements from index.html and hides the
  * elements that should only be displayed when the scenes array runs.
  * Also creates a click event for the start button which removes all elements
- * on the start page and calls the function to show the first scene in "scenes".*/
+ * on the start page and calls the function to show the first scene in "scenes".
+ * */
 function startGame() {
-  //hämtar med nedstående klasser (till höger) och ger dessa variabelnamn i js
+  getElementsToStartGame();
+
+  //skapar variabelnamn till startGameButton
+  const startGameButton = document.getElementById("startGameButton");
+
+  //skapar en anonym funktion som anropar funktionen renderScene
+  startGameButton.addEventListener("click", function () {
+    //spelar musik på första scenen
+    playAudio("src/sounds/startMusic.mp3");
+
+    //hämtar alla element på startsidan
+    const startRoomElements = document.querySelectorAll(".startRoom");
+
+    //loopar igenom med alla element på startsidan medforeach och ta bort alla element
+    startRoomElements.forEach(function (element) {
+      element.remove();
+    });
+    //öppnar upp scen 1
+    renderScene();
+  });
+}
+
+/**
+ * Retrieves necessary elements to initialize the game's start interface, 
+ * sets initial display styles, and populates with content.
+ */
+function getElementsToStartGame() {
   const startH1 = document.querySelector(".startH1");
   const startH3 = document.querySelector(".startH3");
   const startH4 = document.querySelector(".startH4");
@@ -56,33 +86,15 @@ function startGame() {
   //hämtar hem bodyn och ger den namnet body för att sedan byta bakgrundbilden till den som finns i objektet start
   const body = document.querySelector("body");
   body.style.backgroundImage = start.backgroundImage;
-
-  //skapar variabelnamn till startGameButton
-  const startGameButton = document.getElementById("startGameButton");
-
-  //skapar en anonym funktion som anropar funktionen renderScene
-  startGameButton.addEventListener("click", function () {
-    //spelar musik på första scenen
-    playAudio("src/sounds/startMusic.mp3");
-
-    //hämtar alla element på startsidan
-    const startRoomElements = document.querySelectorAll(".startRoom");
-
-    //loopar igenom med alla element på startsidan medforeach och ta bort alla element
-    startRoomElements.forEach(function (element) {
-      element.remove();
-    });
-    //öppnar upp scen 1
-    renderScene();
-  });
 }
 
-/**Creates the variable that retrieves different sounds and displays it in the DOM.
+/**
+ * Creates the variable that retrieves different sounds and displays it in the DOM.
  * Checks through an if statement if a sound is already playing when a new sound arrives.
  * If so, the first sound is paused and removed from the DOM.
  *
  * @param {HTMLAudioElement} audioSrc url link that fetches the music
- * */
+ */
 function playAudio(audioSrc) {
   //funktion som spelar och pausar ljud
   //befintligt ljud pausas om något redan spelas
@@ -96,9 +108,11 @@ function playAudio(audioSrc) {
   document.body.appendChild(audio);
 }
 
-/**Gets elements for the scenes and declares them in Javascript.
- *  Creates click events for the button on the right and left and
- * calls many functions required for the game to function properly. */
+/**
+ * Gets elements for the scenes and declares them in Javascript.
+ * Creates click events for the button on the right and left and
+ * calls many functions required for the game to function properly. 
+ * */
 function renderScene() {
   //skapar variabler som hämtar de föränderliga elementen i js så som text och knappar, bakgrundsbild
   const text = document.getElementById("text");
@@ -131,7 +145,7 @@ function renderScene() {
   buttonRight.textContent = scene.buttonRight.text;
   body.style.backgroundImage = scene.backgroundImage; //ändrar style för bodyn backgrundbild utefter aktivt element
 
-  collectJoinAndDisplayAssets(
+  manageSceneAssetsAndButtons(
     addAssetButton,
     addAssetButton2,
     assetImage,
@@ -150,7 +164,7 @@ function renderScene() {
     playAudio("");
     // om aktivt scenindex är 2 (köket) och användaren INTE har nyckeln i sitt inventory
     getIntoBedroom(scene);
-    checkInventoryForWinLose(leftButton, rightButton);
+    checkInventoryForWinLose();
     checkForPhone();
   };
 
@@ -159,13 +173,14 @@ function renderScene() {
   loseAndWin();
 }
 
-/**Checks if the user is in the kitchen and does not have the key in
+/**
+ * Checks if the user is in the kitchen and does not have the key in
  * his/hers inventory. If this is true, a message is displayed to the user
  * that he/she needs the key to proceed. If the user has the key and is in
  * the kitchen, he/she can continue without a message.
  *
  * @param {object} scene Fetches the active scene
- * */
+ */
 function getIntoBedroom(scene) {
   //kollar ifall användaren har nyckeln i sitt inventory, annars säger den åt hen att hämta den i scen 0.
   if (activeSceneIndex === 2 && !inventory.includes(keys)) {
@@ -182,12 +197,18 @@ function getIntoBedroom(scene) {
   } else {
     goNextScene(scene.buttonRight.nextSceneIndex);
   }
+  //om aktivt sceneindex är 3 (användaren kommit vidare från köket) så tas nyckeln bort från inventory
   if (activeSceneIndex === 3) {
-       removeKeys();
+    removeKeys();
     renderInventory();
   }
 }
 
+/**
+ * Searches for the 'keys' in the 'inventory' array and removes them if found.
+ * @param {Array} inventory - The array containing items.
+ * @param {*} keys - The item to be searched for and removed.
+ */
 function removeKeys() {
   const keysIndex = inventory.indexOf(keys);
 
@@ -196,13 +217,15 @@ function removeKeys() {
   }
 }
 
-/**Through an else if statement, finds out whether the user is in the bedroom
+/**
+ * Through an else if statement, finds out whether the user is in the bedroom
  * and has the phone in his inventory or not. If the user has the phone,
  * a message is displayed that the police are being called, if not, the message
- * instead reads that the player should pick up the phone that is on the porch. */
+ * instead reads that the player should pick up the phone that is on the porch. 
+ */
 function checkForPhone() {
   //kollar om användaren har telefonen i sitt inventory när den befinenr sig i sovrummet och har olika beteende beroende på det.
-  if (activeSceneIndex === 3 && !inventory.includes(scenes[0].asset)) {
+  if (activeSceneIndex === 3 && !inventory.includes(iphone)) {
     playAgain.className = "playAgain";
     message.className = "message";
     message.textContent =
@@ -213,7 +236,7 @@ function checkForPhone() {
       document.body.removeChild(message);
     }, 4000);
     document.body.appendChild(message);
-  } else if (activeSceneIndex === 3 && inventory.includes(scenes[0].asset)) {
+  } else if (activeSceneIndex === 3 && inventory.includes(iphone)) {
     message.textContent =
       "Good thing you had the phone to call the police!\r\n'Hello officer! There's a dead woman in the bedroom at 104 Crazy Street in Palm Springs, come quick, I'm afraid the killer is still in the house!'";
     text.style.display = "none";
@@ -225,16 +248,12 @@ function checkForPhone() {
   }
 }
 
-/**Finds out if the user is in the lit bathroom (end scene). If the user is,
+/**
+ * Finds out if the user is in the lit bathroom (end scene). If the user is,
  * the function checks if there is a gun and bullets in the inventory.
- * If there is, a gunshot sound is played and a message that the player has won
- * by shooting the killer is displayed. If not, a message is displayed instead
- * stating that the user has lost and died and gone to heaven while playing a failure sound.
- *
- * @param {HTMLButtonElement} leftButton Is a HTML button element
- * @param {HTMLButtonElement} rightButton Is a HTML button element
- * */
-function checkInventoryForWinLose(leftButton, rightButton) {
+ * If there is function winGame is called. If not, function loseGame is called.
+ */
+function checkInventoryForWinLose() {
   //kollar av inventory i den slutliga scenen om man väljer att attackera mördare.
   //skapar ny h1tag och ger den klassen message
   message.className = "message";
@@ -243,94 +262,125 @@ function checkInventoryForWinLose(leftButton, rightButton) {
   //om man är i scenen med index 5
   if (activeSceneIndex === 5) {
     //och det ligger en pistol och kulor i ens inventory
-    if (
-      inventory.includes("src/inventoryitems/gun.png") &&
-      inventory.includes("src/inventoryitems/bullets.png")
-    ) {
-      message.textContent =
-        "Victory!! You managed to attack the killer with your gun and bullets. You have won and neutralized the killer!";
-
-      footer.style.display = "none";
-      text.style.display = "none";
-      leftButton.style.display = "none";
-      rightButton.style.display = "none";
-
-      document.body.appendChild(message);
-      document.body.appendChild(playAgain);
-      newGame(playAgain);
-      playAudio("src/sounds/gunshot.mp3");
+    if (inventory.includes(gun) && inventory.includes(bullets)) {
+      winGame();
     } else {
-      message.textContent =
-        "Loser!! You hadn't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died, but at least you went to heaven.";
-      footer.style.display = "none";
-      text.style.display = "none";
-      leftButton.style.display = "none";
-      rightButton.style.display = "none";
-      document.body.style.backgroundImage = 'url("src/losegame.png")';
-
-      document.body.appendChild(message);
-      document.body.appendChild(playAgain);
-      newGame(playAgain);
-      playAudio("src/sounds/fail.mp3");
+      loseGame();
     }
   }
 }
 
-/**In this function there is a condition that checks if asset and asset2
- * exist on the object in the scene, if it does it is rendered, if not it is hidden.
- * Also checks if users have already added it to inventory, if they
- * have then the item is hidden.Also gives asset and asset2 click event which causes
- * them to be added to inventory and emit sound when the player picks them up. */
-function collectJoinAndDisplayAssets(
+/**
+ * A gunshot sound is played, and message telling the player he/she has won
+ * by shooting the killer is displayed + "play again" button is showed
+ */
+function winGame() {
+  message.textContent =
+    "Victory!! You managed to attack the killer with your gun and bullets. You have won and neutralized the killer!";
+
+  footer.style.display = "none";
+  text.style.display = "none";
+  leftButton.style.display = "none";
+  rightButton.style.display = "none";
+
+  document.body.appendChild(message);
+  document.body.appendChild(playAgain);
+  newGame(playAgain);
+  playAudio("src/sounds/gunshot.mp3");
+}
+
+/**
+ * A message is displayed stating that the user has lost
+ * and died and gone to heaven while playing
+ * a failure sound + "play again" button.
+ */
+function loseGame() {
+  message.textContent =
+    "Loser!! You haven't found the gun and the bullets, which allowed the killer to attack you first. You unfortunately died, but at least you went to heaven.";
+  footer.style.display = "none";
+  text.style.display = "none";
+  leftButton.style.display = "none";
+  rightButton.style.display = "none";
+  document.body.style.backgroundImage = 'url("src/losegame.png")';
+
+  document.body.appendChild(message);
+  document.body.appendChild(playAgain);
+  newGame(playAgain);
+  playAudio("src/sounds/fail.mp3");
+}
+
+/**
+ * Checks the presence of a scene asset in the inventory and updates the image and button visibility accordingly.
+ * @param {string} sceneAsset - The asset associated with the scene to be checked.
+ * @param {Array} inventory - An array containing the assets in the inventory.
+ * @param {HTMLImageElement} imageElement - The HTML image element to display the asset.
+ * @param {HTMLElement} buttonElement - The HTML element (button) controlling the asset's visibility.
+ */
+function checkAsset(sceneAsset, inventory, imageElement, buttonElement) {
+  if (sceneAsset && inventory.indexOf(sceneAsset) === -1) {
+    imageElement.src = sceneAsset;
+    buttonElement.style.display = "block";
+  } else {
+    buttonElement.style.display = "none";
+  }
+}
+
+/**
+ * Handles button presses to add assets to the inventory and update the interface.
+ * @param {string} sceneAsset The asset to be added to the inventory on the button press.
+ * @param {Array} inventory An array containing the assets in the inventory.
+ * @param {HTMLButtonElement} buttonElement The HTML element (button) that activates the function on click.
+ * @param {string} pickupSound The sound played when an asset is picked up and added to the inventory.
+ */
+function handleButtonClick(sceneAsset, inventory, buttonElement, pickupSound) {
+  buttonElement.onclick = function () {
+    if (inventory.indexOf(sceneAsset) === -1) {
+      inventory.push(sceneAsset);
+      playAudio(pickupSound);
+      buttonElement.style.display = "none";
+      renderInventory();
+    }
+  };
+}
+
+/**
+ * Manages scene assets and their associated buttons, controlling their visibility and interactions.
+ * @param {HTMLElement} addAssetButton - The button element for the first asset.
+ * @param {HTMLElement} addAssetButton2 - The button element for the second asset.
+ * @param {HTMLImageElement} assetImage - The image element displaying the first asset.
+ * @param {HTMLImageElement} asset2Image - The image element displaying the second asset.
+ * @param {Object} scene - The scene object containing asset information.
+ * @param {string} scene.asset - The URL or identifier of the first asset.
+ * @param {string} scene.asset2 - The URL or identifier of the second asset.
+ */
+function manageSceneAssetsAndButtons(
   addAssetButton,
   addAssetButton2,
   assetImage,
   asset2Image,
   scene
 ) {
-  /* villkor som kollar om asset och asset2 finns på objektet i scenen, gör den de så renderas den ut, om inte döljs den.
-  kollar också om användare redan har lagt till den i inventory, har den de så döljs knappen.*/
-  if (scene.asset && inventory.indexOf(scene.asset) === -1) {
-    assetImage.src = scene.asset;
-    addAssetButton.style.display = "block";
-  } else {
-    addAssetButton.style.display = "none";
-  }
+  checkAsset(scene.asset, inventory, assetImage, addAssetButton);
+  checkAsset(scene.asset2, inventory, asset2Image, addAssetButton2);
 
-  if (scene.asset2 && inventory.indexOf(scene.asset2) === -1) {
-    asset2Image.src = scene.asset2;
-    addAssetButton2.style.display = "block";
-  } else {
-    addAssetButton2.style.display = "none";
-  }
-
-  //anonyma funktioner vad som händer när man klickar på först asset sen asset2
-  addAssetButton.onclick = function () {
-    if (inventory.indexOf(scene.asset) !== -1) {
-      //asset finns redan i inventoy. vill inte lägga till igen
-    } else {
-      //asset finns inte så lägg till den med hjälp av .push()
-      inventory.push(scene.asset);
-      playAudio("src/sounds/pickup.mp3");
-      //dölj asset knappen eftersom användare plockat upp den.
-      addAssetButton.style.display = "none";
-
-      //skapar element för bilden i scenens asset som läggs i inventory footern
-      renderInventory();
-    }
-  };
-
-  addAssetButton2.onclick = function () {
-    if (inventory.indexOf(scene.asset2) !== -1) {
-    } else {
-      inventory.push(scene.asset2);
-      playAudio("src/sounds/pickup.mp3");
-      addAssetButton2.style.display = "none";
-      renderInventory();
-    }
-  };
+  handleButtonClick(
+    scene.asset,
+    inventory,
+    addAssetButton,
+    "src/sounds/pickup.mp3"
+  );
+  handleButtonClick(
+    scene.asset2,
+    inventory,
+    addAssetButton2,
+    "src/sounds/pickup.mp3"
+  );
 }
 
+/**
+ * Renders the inventory in the HTML footer section by populating it with images of collected assets.
+ * @param {Array} inventory - The array containing URLs or identifiers of collected assets.
+ */
 function renderInventory() {
   const inventoryFooter = document.getElementById("inventory");
   inventoryFooter.innerHTML = "";
@@ -343,8 +393,10 @@ function renderInventory() {
   }
 }
 
-/**Checks if the user is on stage 6, which means it ran away from the killer.
- * If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed. */
+/**
+ * Checks if the user is on stage 6, which means it ran away from the killer.
+ * If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed. 
+ */
 function loseAndWin() {
   //funktion som körs när man väljer att springa iväg i sista scenen
   const message = document.createElement("h1");
@@ -352,7 +404,8 @@ function loseAndWin() {
     playAudio("src/sounds/cops.mp3");
     playAgain.className = "playAgainN";
     message.className = "messageN";
-    message.textContent = "You either lose or win the game since you ran away.";
+    message.textContent =
+      "You either lose nor win the game since you ran away.";
 
     footer.style.display = "none";
     text.style.display = "none";
@@ -361,12 +414,10 @@ function loseAndWin() {
     document.body.appendChild(playAgain);
     newGame(playAgain);
   }
-
-  /* document.body.appendChild(message);
-  document.body.appendChild(playAgain); */
 }
 
-/**Determines when the right and left buttons should not be displayed
+/**
+ * Determines when the right and left buttons should not be displayed
  *
  * @param {HTMLButtonElement} leftButton Is a HTML button element
  * @param {HTMLButtonElement} rightButton Is a HTML button element
@@ -388,7 +439,8 @@ function showButton(leftButton, rightButton) {
   }
 }
 
-/**Changes the activeSceneIndex to the scene currently active in the game,
+/**
+ * Changes the activeSceneIndex to the scene currently active in the game,
  * then runs the function that fetches all elements for the active scene.
  *
  * @param {number} sceneIndex Fetches the active sceneIndex number
@@ -399,7 +451,8 @@ function goNextScene(sceneIndex) {
   renderScene(); //kör funktionen renderscene som hämtar hem allting för den aktiva scenen
 }
 
-/**Determines that all elements in scenes should be displayed.
+/**
+ * Determines that all elements in scenes should be displayed.
  *
  * @param {HTMLButtonElement} leftButton Is a HTML button element
  * @param {HTMLButtonElement} rightButton Is a HTML button element
@@ -427,8 +480,10 @@ function setDisplayStyle(
   footer.style.display = "block";
 }
 
-/**Make the power button for lamp only appear in the dark bathroom and
- * give it a click event that leads to the light bathroom. */
+/**
+ * Make the power button for lamp only appear in the dark bathroom and
+ * give it a click event that leads to the light bathroom.
+ */
 function powerButton() {
   //skapar variabel för lampknappen
   const powerSwitchButton = document.getElementById("powerSwitch");

@@ -19,10 +19,48 @@ let inventory = []; //array där saker spelaren plockat upp läggs
  * }} Scene
  */
 
+/**
+ * URL or identifier for keys in the inventory.
+ * @type {string}
+ */
 const keys = "src/inventoryitems/keys.png";
+
+/**
+ * URL or identifier for iPhone in the inventory.
+ * @type {string}
+ */
 const iphone = "src/inventoryitems/iphone.png";
+
+/**
+ * URL or identifier for fingerprint powder in the inventory.
+ * @type {string}
+ */
 const powder = "src/inventoryitems/fingerprintPowder.png";
+
+/**
+ * URL or identifier for bullets in the inventory.
+ * @type {string}
+ */
 const bullets = "src/inventoryitems/bullets.png";
+
+/**
+ * URL or identifier for knife in the inventory.
+ * @type {string}
+ */
+const knife = "src/inventoryitems/blodkniv.png";
+
+/**
+ * URL or identifier for tape in the inventory.
+ * @type {string}
+ */
+const tape = "src/inventoryitems/tape.png";
+
+/**
+ * URL or identifier for gun in the inventory.
+ * @type {string}
+ */
+const gun = "src/inventoryitems/gun.png";
+
 
 
 /**
@@ -59,8 +97,8 @@ const scenes = [
   {
     //scen 2 - kök
     text: "Oh my god! There is blood here, maybe this is where the victim was attacked?",
-    asset: "src/inventoryitems/blodkniv.png",
-    asset2: "src/inventoryitems/tape.png",
+    asset: knife,
+    asset2: tape,
     buttonLeft: {
       text: "Go to livingroom",
       nextSceneIndex: 1,
@@ -74,7 +112,7 @@ const scenes = [
   {
     //scen 3 - sovrum
     text: "Call 911! Quick, click the right item in your inventory to call the police. If you don't have it you should look for it on the porch",
-    asset: "src/inventoryitems/gun.png",
+    asset: gun,
     asset2: "",
     buttonLeft: {
       text: "Go to kitchen",

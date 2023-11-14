@@ -71,7 +71,7 @@ There are few global variables in the code, because I wanted to avoid them. Thos
 - **let activeSceneIndex = 0;**\
   _This variable keeps track of which scene the player is on and thus needs to be changeable (let). The variable is used extensively in the code, for example in if else statements when different things must happen depending on where the player is._
 
-- **const inventory = [];**\
+- **let inventory = [];**\
   _This is where the various things found in the rooms are placed once the player has picked them up. The variable therefore needs to be an array that takes care of several different things._
   _It is also used a lot to check if certain things are in the player's inventory by using if else conditions to generate a certain behavior._
 
@@ -84,8 +84,33 @@ There are few global variables in the code, because I wanted to avoid them. Thos
 - **let message = document.createElement("h1");**\
   _Called several times in different functions to generate a message to the player based on which room it is in and what it has in its inventory._
 
+  **let playAgain = document.createElement("button");**\
+  _Defines a "play again" button element that is used on three different occasions._
+
 - **let audio;**\
   _Used to give different sounds to scenes and elements._
+
+  **const keys = "src/inventoryitems/keys.png";**\
+  _URL or identifier for keys in the inventory._
+
+  **const iphone = "src/inventoryitems/iphone.png";**\
+  _URL or identifier for Iphone in the inventory_
+
+  **const powder = "src/inventoryitems/fingerprintPowder.png";**\
+  _URL or identifier for fingerprint powder in the inventory_
+
+  **const bullets = "src/inventoryitems/bullets.png";**\
+  _URL or identifier for bullets in the inventory_
+
+  **const knife = "src/inventoryitems/blodkniv.png";**\
+  _URL or identifier for knife in the inventory_
+
+  **const tape = "src/inventoryitems/tape.png";**\
+  _URL or identifier for tape in the inventory_
+
+  **const gun = "src/inventoryitems/gun.png";**\
+  _URL or identifier for gun in the inventory_
+
 
 ### 2.3 The functions
 
@@ -97,6 +122,9 @@ Let's talk briefly about the functions, which are the funniest part of the whole
 - **startGame()**\
   _First declares all existing dom elements from index.html and hides the elements that should only be displayed when the scenes array runs._
   _Also creates a click event for the start button which removes all elements on the start page and calls the function to show the first scene in "scenes"._
+
+**getElementsToStartGame()**\
+_Retrieves necessary elements to initialize the game's start interface, sets initial display styles, and populates with content._
 
 - **renderScene()**\
   _Gets elements for the scenes and declares them in Javascript. Creates click events for the button on the right and left and calls many functions required for the game to function properly._
@@ -110,13 +138,35 @@ Let's talk briefly about the functions, which are the funniest part of the whole
 - **checkForPhone()**\
   _Through an else if statement, finds out whether the user is in the bedroom and has the phone in his inventory or not. If the user has the phone, a message is displayed that the police are being called, if not, the message instead reads that the player should pick up the phone that is on the porch._
 
-- **checkInventoryForWinLose(leftButton, rightButton)**\
-  _Finds out if the user is in the lit bathroom (end scene). If the user is, the function checks if there is a gun and bullets in the inventory. If there is, a gunshot sound is played and a message that the player has won by shooting the killer is displayed. If not, a message is displayed instead stating that the user has lost and died and gone to heaven while playing a failure sound._
+**getIntoBedroom(scene)**\
+_Checks if the user is in the kitchen and does not have the key in his/hers inventory. If this is true, a message is displayed to the user that he/she needs the key to proceed. If the user has the key and is in the kitchen, he/she can continue without a message._
 
-- **collectJoinAndDisplayAssets(addAssetButton, addAssetButton2, assetImage, asset2Image, inventoryFooter, scene)**\
-  _In this function there is a condition that checks if asset and asset2 exist on the object in the scene, if it does it is rendered, if not it is hidden._\
-  _Also checks if users have already added it to inventory, if they have then the item is hidden._\
-  _Also gives asset and asset2 click event which causes them to be added to inventory and emit sound when the player picks them up._
+**removeKeys()**\
+_Searches for the 'keys' in the 'inventory' array and removes them if found_
+
+**checkForPhone()**\
+_Through an else if statement, finds out whether the user is in the bedroom and has the phone in his inventory or not. If the user has the phone, a message is displayed that the police are being called, if not, the message instead reads that the player should pick up the phone that is on the porch._
+
+**checkInventoryForWinLose()**\
+  _Finds out if the user is in the lit bathroom (end scene). If the user is, the function checks if there is a gun and bullets in the inventory. If there is function winGame is called. If not, function loseGame is called._
+
+**winGame()**\
+_A gunshot sound is played, and message telling the player he/she has won by shooting the killer is displayed + "play again" button is showed_
+
+**loseGame()**\
+_A message is displayed stating that the user has lost and died and gone to heaven while playing a failure sound + "play again" button._
+
+**checkAsset(sceneAsset, inventory, imageElement, buttonElement)**\
+_Checks the presence of a scene asset in the inventory and updates the image and button visibility accordingly._
+
+**handleButtonClick(sceneAsset, inventory, buttonElement, pickupSound)**\
+_Handles button presses to add assets to the inventory and update the interface._
+
+**manageSceneAssetsAndButtons(addAssetButton, addAssetButton2, assetImage, asset2Image,scene)**\
+_Manages scene assets and their associated buttons, controlling their visibility and interactions._
+
+**renderInventory()**\
+_Renders the inventory in the HTML footer section by populating it with images of collected assets._
 
 - **loseAndWin()**\
   _Checks if the user is on stage 6, which means it ran away from the killer. If the player is there, "bad boys" is played and a message saying that you neither won nor lost is displayed._
@@ -144,12 +194,14 @@ This game was made as a school project and is the first project I ever created u
 I wanted to learn about arrays, loops and if else conditions, which led to a large part of the code for the program being made with these very parts.
 
 ### 3.1 What is needed to run the program
+
 <<<<<<< HEAD
 
-To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
-=======
+# To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
+
 To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, please contact me at (e.g.: elsasofiabonde@gmail.com).
->>>>>>> 61b3a765d75c8af7ad5c486832b96acdc41bae74
+
+> > > > > > > 61b3a765d75c8af7ad5c486832b96acdc41bae74
 
 ### 3.2 Tools used to create the game
 
@@ -174,19 +226,19 @@ If you have any questions or find a bug in the program that you want to share do
 If you want to contribute to the game, follow these steps:
 
 1. Fork the project.
-<<<<<<< HEAD
+   <<<<<<< HEAD
 2. Create a new branch for your work:
    `git checkout -b your-new-branch`
 3. Make your changes and commit:
    `git commit -m "Your change"`
 4. Push to your branch:
    `git push origin your-new-branch`
-=======
-2. Create a new branch for your work: 
-`git checkout -b your-new-branch`
-3. Make your changes and commit: 
-`git commit -m "Your change"`
-4. Push to your branch: 
-`git push origin your-new-branch`
->>>>>>> 61b3a765d75c8af7ad5c486832b96acdc41bae74
-5. Create a pull request on GitHub.
+   =======
+5. Create a new branch for your work:
+   `git checkout -b your-new-branch`
+6. Make your changes and commit:
+   `git commit -m "Your change"`
+7. Push to your branch:
+   `git push origin your-new-branch`
+   > > > > > > > 61b3a765d75c8af7ad5c486832b96acdc41bae74
+8. Create a pull request on GitHub.
