@@ -306,6 +306,7 @@ function winGame() {
   text.style.display = "none";
   leftButton.style.display = "none";
   rightButton.style.display = "none";
+  document.body.style.backgroundImage = 'url("src/wingame.jpg")';
 
   document.body.appendChild(message);
   document.body.appendChild(playAgain);
