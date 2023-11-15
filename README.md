@@ -195,13 +195,7 @@ I wanted to learn about arrays, loops and if else conditions, which led to a lar
 
 ### 3.1 What is needed to run the program
 
-<<<<<<< HEAD
-
-# To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
-
-To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, please contact me at (e.g.: elsasofiabonde@gmail.com).
-
-> > > > > > > 61b3a765d75c8af7ad5c486832b96acdc41bae74
+To run the program you need to have access to a computer and all the files (you can download the zip file on GitHub) or open the page through this link: [Murder Mystery](https://elsabonde.github.io/murdermystery/). If you have problems opening the page, pleaze contact me at (e.g.: elsasofiabonde@gmail.com).
 
 ### 3.2 Tools used to create the game
 
@@ -226,19 +220,16 @@ If you have any questions or find a bug in the program that you want to share do
 If you want to contribute to the game, follow these steps:
 
 1. Fork the project.
-   <<<<<<< HEAD
 2. Create a new branch for your work:
    `git checkout -b your-new-branch`
 3. Make your changes and commit:
    `git commit -m "Your change"`
 4. Push to your branch:
    `git push origin your-new-branch`
-   =======
 5. Create a new branch for your work:
    `git checkout -b your-new-branch`
 6. Make your changes and commit:
    `git commit -m "Your change"`
 7. Push to your branch:
    `git push origin your-new-branch`
-   > > > > > > > 61b3a765d75c8af7ad5c486832b96acdc41bae74
 8. Create a pull request on GitHub.
