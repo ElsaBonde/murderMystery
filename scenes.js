@@ -7,16 +7,6 @@ let activeSceneIndex = parseInt(localStorage.getItem("activeSceneIndex")) || 0;
 let storedInventory = localStorage.getItem("inventory");
 let inventory = storedInventory ? JSON.parse(storedInventory) : [];
 
-/**
- * @typedef {{
- *   text: string,
- *   asset: string,
- *   asset2: string,
- *   buttonLeft: { text: string, nextSceneIndex: number },
- *   buttonRight: { text: string, nextSceneIndex: number },
- *   backgroundImage: string
- * }} Scene
- */
 
 /**
  * URL or identifier for keys in the inventory.
@@ -61,7 +51,16 @@ const tape = "src/inventoryitems/tape.png";
 const gun = "src/inventoryitems/gun.png";
 
 
-
+/**
+ * @typedef {{
+*   text: string,
+*   asset: string,
+*   asset2: string,
+*   buttonLeft: { text: string, nextSceneIndex: number },
+*   buttonRight: { text: string, nextSceneIndex: number },
+*   backgroundImage: string
+* }} Scene
+*/
 /**
  * @type {Scene[]} Defines that scenes is an array with scenes
  */
