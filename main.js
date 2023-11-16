@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", function() {
   //hämtar värdet för sparat sceneindex
   const savedSceneIndex = localStorage.getItem("activeSceneIndex");
 
-  //om det sparade scenindexet har ett riktigt värde så 
+  //om det sparade scenindexet har ett värde så 
   if (savedSceneIndex !== null) {
     //ges activesceneindex det värdet
     activeSceneIndex = parseInt(savedSceneIndex);
@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", function() {
     renderScene();
     hideStartGameElements();
     
-  } else { //ladda startscenen om inget sparats i local storage
+  } else { //ladda startscenen om inget finns sparat i local storage
     startGame();
   }
 });
